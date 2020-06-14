@@ -42,7 +42,7 @@ function remove_wpml_generator()
 // Remove Yoast Debug Mark
 function remove_yoast_seo_comments_fn()
 {
-    if (!class_exists('WPSEO_Frontend') || !method_exists(WPSEO_Frontend, 'get_instance')) {
+    if (!class_exists('WPSEO_Frontend') || !method_exists('WPSEO_Frontend', 'get_instance')) {
         return;
     }
     $instance = WPSEO_Frontend::get_instance();
@@ -297,6 +297,7 @@ class issuesScanClass
         $firewalls_slugs = array(
             'getastra/astra-security.php',
             'astra_wp/astra_wp.php',
+            'astra_tc/astra_tc.php',
             'wordfence/wordfence.php',
             'wp-cerber/wp-cerber.php',
             'better-wp-security/better-wp-security.php',
@@ -436,8 +437,8 @@ class tableViewOutput
     protected $last_results_time;
     protected $issues_list;
 
-    protected $out_success;
-    protected $out_error;
+    protected $out_success = array();
+    protected $out_error = array();
     protected $table;
 
     function __construct()

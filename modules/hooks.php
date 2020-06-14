@@ -8,7 +8,7 @@ function wh_admin_footer(){
 }
   
  
-add_Action('init', 'fake_cron_function');
+add_action('init', 'fake_cron_function');
 function fake_cron_function(){
 	$last_run = get_option('hard_cron');
 	if( $last_run == '' || !$last_run ){
@@ -46,7 +46,7 @@ function fake_cron_function(){
 		// getting list of users
   		$user_ids = $wpdb->get_col("SELECT user_id FROM {$wpdb->prefix}usermeta WHERE meta_key = 'whp_subscribed_email'");
 
-	
+  		/*
 		if( count($user_ids) > 0 ){
 			foreach( $user_ids as $single_id ){
 
@@ -78,6 +78,7 @@ function fake_cron_function(){
 				wp_mail( $user_email, $subject, $content, $headers);
 			}
 		}
+		*/
 	
 		
   }

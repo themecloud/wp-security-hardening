@@ -4,12 +4,12 @@ if (!defined('ABSPATH')) exit ('Peekaboo!');
 
 /*
 Plugin Name: WP Hardening
-Plugin URI: https://www.getastra.com/s/wp-hardening
+Plugin URI: https://www.getastra.com/
 Description: Harden your WordPress security by fixing 20 common security loopholes by just a click.
-Version: 1.1.1
+Version: 1.1.2
 Author: Astra Security
 Author URI: https://www.getastra.com/
-Stable tag: 1.1.1
+Stable tag: 1.1.2
 */
 
 
