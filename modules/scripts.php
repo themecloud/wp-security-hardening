@@ -22,7 +22,6 @@ if (!class_exists('whpAddStylesHard')) {
 
         public function add_script_fn()
         {
-            wp_enqueue_media();
 
             foreach ($this->files_list as $key => $value) {
                 if ($key == 'common') {
