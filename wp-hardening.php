@@ -101,6 +101,15 @@ function whp_plugin_activation()
     }
 
 }
-
+/**
+* Add settings action link to the plugins page.
+*/
+add_filter( 'plugin_action_links_' . plugin_basename(__FILE__), 'add_action_links' );
+function add_action_links ( $links ) {
+    $settings_link = array(
+            '<a href="' . admin_url( 'admin.php?page=wphwp_harden_fixers') . '">' . __('Settings') . '</a>',
+    );
+   return array_merge( $links, $settings_link );
+}
 
 ?>
