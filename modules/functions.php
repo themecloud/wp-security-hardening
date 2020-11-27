@@ -148,7 +148,43 @@ class issuesScanClass
 
         $eol_time = strtotime($php_versions[$site_version]['eol']);
         $today = time();
-        if ($eol_time <= $today) {
+
+
+/* Check current version of PHP */
+ 
+$html = file_get_contents('https://www.php.net/releases/index.php'); //get the html returned from the following url
+$pokemon_doc = new DOMDocument();
+libxml_use_internal_errors(TRUE); //disable libxml errors
+if(!empty($html)){ //if any html is actually returned
+    $pokemon_doc->loadHTML($html);
+    libxml_clear_errors(); //remove errors for yucky html
+    $pokemon_xpath = new DOMXPath($pokemon_doc);
+    //get all the h2's with an id
+    $pokemon_row = $pokemon_xpath->query('//h2');
+    if($pokemon_row->length > 0){
+        $i=0;
+        $string = '';
+        foreach($pokemon_row as $row){
+            if($i==0){ 
+                 
+                $parts  = explode('.', $row->nodeValue);
+                array_pop($parts);
+                 $string.= trim(implode('.', $parts));
+            }
+            $i++;
+        }
+    }
+}
+ 
+$system = phpversion();
+$ststemversionExp  = explode('.', $system);
+array_pop($ststemversionExp);
+$system= implode('.', $ststemversionExp);
+
+/* Check current version of PHP */
+
+
+        if ($system != $string) {
             // If EOL is passed, show unsupported message.
             $msg = $unsupported_version_message . ' ' . $unsupported_message;
 
@@ -158,7 +194,7 @@ class issuesScanClass
                 'details' => __('Move to the latest and secured version with this <a href="https://www.getastra.com/blog/cms/wordpress-security/wordpress-security-guide/#3-Update-your-PHP-to-the-latest-version">guide</a> here.', 'whp'),
             );
 
-        } elseif ($eol_time - 15552000 < $today) {
+        } elseif ($system == $string) {
             // If EOL is coming up within the next 180 days, show expiring soon message.
             $msg = $supported_version_message . ' ' . $security_ending_message;
 
