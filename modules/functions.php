@@ -163,19 +163,19 @@ if(!empty($html)){ //if any html is actually returned
     $pokemon_row = $pokemon_xpath->query('//h2');
     if($pokemon_row->length > 0){
         $i=0;
-        $string = '';
+        $string = array();
         foreach($pokemon_row as $row){
             if($i==0){ 
                  
                 $parts  = explode('.', $row->nodeValue);
                 array_pop($parts);
-                 $string.= trim(implode('.', $parts));
+                 $string[]= trim(implode('.', $parts));
             }
             $i++;
         }
     }
 }
- 
+ $string = max($string);
 $system = phpversion();
 $ststemversionExp  = explode('.', $system);
 array_pop($ststemversionExp);
