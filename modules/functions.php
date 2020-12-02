@@ -174,7 +174,7 @@ if(!empty($html)){ //if any html is actually returned
             $i++;
         }
     }
-} 
+}
 
 $string = max($string);
  
