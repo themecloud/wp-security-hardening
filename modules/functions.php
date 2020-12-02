@@ -165,12 +165,12 @@ if(!empty($html)){ //if any html is actually returned
         $i=0;
         $string = array();
         foreach($pokemon_row as $row){
-            if($i==0){ 
+            // if($i==0){ 
                  
                 $parts  = explode('.', $row->nodeValue);
                 array_pop($parts);
                  $string[]= trim(implode('.', $parts));
-            }
+            // }
             $i++;
         }
     }
