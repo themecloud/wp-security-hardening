@@ -21,7 +21,7 @@ function whp_remove_appended_version_script_style($target_url)
 
     return $target_url;
 }
-
+ 
 function remove_revslider_meta_tag()
 {
     return '';
