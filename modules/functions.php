@@ -163,24 +163,27 @@ if(!empty($html)){ //if any html is actually returned
     $pokemon_row = $pokemon_xpath->query('//h2');
     if($pokemon_row->length > 0){
         $i=0;
-        $string = '';
+        $string = array();
         foreach($pokemon_row as $row){
-            if($i==0){ 
+            // if($i==0){ 
                  
                 $parts  = explode('.', $row->nodeValue);
                 array_pop($parts);
-                 $string.= trim(implode('.', $parts));
-            }
+                 $string[]= trim(implode('.', $parts));
+            // }
             $i++;
         }
     }
 }
+
+$string = max($string);
  
 $system = phpversion();
 $ststemversionExp  = explode('.', $system);
 array_pop($ststemversionExp);
-$system= implode('.', $ststemversionExp);
-
+ $system= implode('.', $ststemversionExp);
+ 
+ 
 /* Check current version of PHP */
 
 
@@ -214,6 +217,16 @@ $system= implode('.', $ststemversionExp);
 
 
     }
+
+
+
+function theme_scripts() {
+  wp_enqueue_script('jquery');
+}
+
+
+
+
 
     public function get_outdated_plugins()
     {
@@ -818,6 +831,10 @@ class WHP_Change_Login_URL
     {
         register_activation_hook($this->basename(), array($this, 'activate'));
         register_uninstall_hook($this->basename(), array('WHP_Change_Login_URL', 'uninstall'));
+
+
+        add_action('wp_enqueue_scripts', 'theme_scripts');
+        wp_register_script('jquery', 'http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js', array(), null, false);
 
         //add_action('admin_init', array($this, 'admin_init'));
         //add_action('admin_notices', array($this, 'admin_notices'));
