@@ -152,19 +152,21 @@ class issuesScanClass
 
 /* Check current version of PHP */
  
-$html = file_get_contents('https://www.php.net/releases/index.php'); //get the html returned from the following url
-$pokemon_doc = new DOMDocument();
+$htmlA = wp_remote_get('https://www.php.net/releases/index.php'); //get the html returned from the following url
+// echo '<pre>';
+$html = $htmlA['body'];
+$getdocValue = new DOMDocument();
 libxml_use_internal_errors(TRUE); //disable libxml errors
 if(!empty($html)){ //if any html is actually returned
-    $pokemon_doc->loadHTML($html);
+    $getdocValue->loadHTML($html);
     libxml_clear_errors(); //remove errors for yucky html
-    $pokemon_xpath = new DOMXPath($pokemon_doc);
+    $docxpath = new DOMXPath($getdocValue);
     //get all the h2's with an id
-    $pokemon_row = $pokemon_xpath->query('//h2');
-    if($pokemon_row->length > 0){
+    $docrow = $docxpath->query('//h2');
+    if($docrow->length > 0){
         $i=0;
         $string = array();
-        foreach($pokemon_row as $row){
+        foreach($docrow as $row){
             // if($i==0){ 
                  
                 $parts  = explode('.', $row->nodeValue);
@@ -175,12 +177,13 @@ if(!empty($html)){ //if any html is actually returned
         }
     }
 }
- $string = max($string);
+   $string = max($string);
 $system = phpversion();
 $ststemversionExp  = explode('.', $system);
 array_pop($ststemversionExp);
-$system= implode('.', $ststemversionExp);
-
+ 
+   $system= implode('.', $ststemversionExp);
+ 
 /* Check current version of PHP */
 
 
