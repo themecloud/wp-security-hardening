@@ -32,8 +32,8 @@ if (!class_Exists('wphMainStart')) {
             add_action('plugins_loaded', array($this, 'myplugin_init'));
 
  
-            add_action('wp_enqueue_scripts', array($this,'theme_scripts'));
-            wp_register_script('jquery', 'http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js', array(), null, false);
+            add_action('init', array($this,'jQuery_library'));
+            
 
 
             //register_activation_hook(__FILE__, array( $this, 'set_cron') );
@@ -41,9 +41,10 @@ if (!class_Exists('wphMainStart')) {
 
 
 
-function theme_scripts() {
-    echo 'asdasdasd';die;
-  wp_enqueue_script('jquery');
+function jQuery_library() {
+ 
+  wp_register_script( 'wp_security_hardening_script', 'http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js', array('jquery') );
+  wp_enqueue_script('wp_security_hardening_script', null, true);
 } 
 
 
