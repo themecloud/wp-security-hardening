@@ -312,7 +312,7 @@ echo '
 
 // show admin toification
 function whp_general_admin_notice(){
-	global $pagenow;
+	/*global $pagenow;
 	global $current_user;
 	//delete_user_meta( $current_user->ID, 'hide_secure_subs');
 	//delete_user_meta( $current_user->ID, 'whp_subscribed_email');
@@ -376,7 +376,7 @@ function whp_general_admin_notice(){
 				 
 			</div>
          </div>';
-   // }
+   // }*/
 }
 add_action('admin_notices', 'whp_general_admin_notice');
 
