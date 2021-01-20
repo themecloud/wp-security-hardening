@@ -126,9 +126,6 @@ function whp_process_fixer()
         $fixer_options = get_option('whp_fixer_option');
         $fixer_options[$id] = $value;
 
-        // echo '<pre>';
-        // print_r($fixer_options);
-
         update_option('whp_fixer_option', $fixer_options);
 
         switch ($id) {

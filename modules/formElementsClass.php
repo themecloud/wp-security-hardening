@@ -268,7 +268,7 @@ if( !class_exists('whpFormElementsClass') ){
 						 
 										),
 									),
-//Code Start by Makkpress
+ 
 									array(
 										'title' => __( 'Audit Preferences', 'whp'),
 										'variants' => array(
@@ -286,7 +286,7 @@ if( !class_exists('whpFormElementsClass') ){
 						 
 										),
 									),
-//Code End  by Makkpress									
+ 									
 
 
 								);
