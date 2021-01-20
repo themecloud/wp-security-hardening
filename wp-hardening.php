@@ -30,10 +30,125 @@ if (!class_Exists('wphMainStart')) {
             }
             // calling localization
             add_action('plugins_loaded', array($this, 'myplugin_init'));
+            add_filter('plugin_action_links_'.plugin_basename(__FILE__), array($this,'wp_security_hardening_settings_link'));
+            add_action( 'admin_notices', array($this,'custom_notice_bar') );
+            add_action( 'admin_notices', array($this,'add_css_plugin') );
 
-
-            //register_activation_hook(__FILE__, array( $this, 'set_cron') );
+             
         }
+
+ 
+
+function add_css_plugin()
+{
+    ?>
+<style type="text/css">
+    
+#activate_plugin_message {
+    justify-content: space-between;
+    align-items: center;}
+
+   
+
+ .notice-img {max-width: 100px;
+    margin-right:10px;}   
+
+  #activate_plugin_message a {width: calc(100% - 100px);
+    display: inline-flex;
+    padding: 5px 0;
+    font-size: 120%;
+    line-height: 1.3;
+    font-weight: 600;
+    color: #23282d;
+    text-decoration: none;
+    align-items: center;}  
+
+  #activate_plugin_message img {max-width:100%;}    
+
+#activate_plugin_message form {text-align: right;
+    width:100px;}
+
+ #activate_plugin_message .button {min-width:100px;}   
+
+ @media screen and (max-width:767px) {
+
+    #activate_plugin_message {flex-wrap: wrap;}
+
+    #activate_plugin_message a {width:100%;
+        font-size: 100%;}    
+
+    .notice-img {max-width: 70px;}    
+
+    #activate_plugin_message form {margin:10px 0 0 0;}
+ }
+
+</style>
+    <?php 
+} 
+
+
+// Custom Message when plugin active
+function custom_notice_bar() {
+ 
+
+$homeurl = home_url($_SERVER['REQUEST_URI']);
+$getvalue = strpos($homeurl, 'plugins.php');
+
+if(isset($_REQUEST['historyvalue']) && $_REQUEST['historyvalue']!='')
+{
+    ?>
+    <script type="text/javascript">
+        localStorage.setItem("historyvalueBrowser", '<?php echo $_REQUEST['historyvalue'];?>');
+    </script>
+    <?php 
+}
+
+   if ($getvalue === false) {}else{
+
+     ?>
+    <div class="notice notice-success" id="activate_plugin_message">
+         
+            <a href="<?php echo admin_url( 'admin.php?page=wphwp_harden_fixers' );?>">
+                
+                 <div class="notice-img"><img src="<?php echo esc_url( plugins_url( '/modules/images/cta.png', __FILE__ ) )?>"></div> 
+            <?php _e( 'We have enabled 12 security fixes to protect your site. Please review them here.', 'wp-security-hardening' ); ?>
+            </a>
+         
+            <form action="<?php echo $_SERVER['REQUEST_URI'];?>" method="post">
+                <input type="hidden" name="historyvalue" value="1">
+                <input class="button button-primary" type="submit" name="submit" value="Got It."/>
+            </form>
+        
+    </div>
+     <script type="text/javascript">
+        var historyvalueBrowser = localStorage.getItem("historyvalueBrowser");
+         
+        if(historyvalueBrowser=='1')
+        {  
+           document.getElementById('activate_plugin_message').style.display = 'none';
+        }else{
+           document.getElementById('activate_plugin_message').style.display = 'flex';
+        }
+    </script>
+    <?php
+}
+
+  
+
+}
+
+
+
+
+
+// Settings links in plugin section
+function wp_security_hardening_settings_link( $links ) {
+    $links[] = '<a href="' .admin_url( 'admin.php?page=wphwp_harden_fixers' ) .'">' . __('Settings') . '</a>';
+    return $links;
+}
+
+
+
 
         function myplugin_init()
         {
@@ -47,7 +162,25 @@ if (!class_Exists('wphMainStart')) {
             // cron to check issues
             wp_clear_scheduled_hook('whp_task_hook');
             if (!wp_next_scheduled('whp_task_hook')) {
-                wp_schedule_event(time(), 'daily', 'whp_task_hook');
+                $scheduledoption = get_option('custom_admin_schedule_audit');
+                
+                if($scheduledoption=='every day')
+                {
+                    $scheduleTime = 'daily';
+                }
+                elseif($scheduledoption=='every week')
+                {
+                    $scheduleTime = 'weekly';
+                }
+                elseif($scheduledoption=='every month')
+                {
+                    $scheduleTime = 'monthly';
+                }else{
+                    $scheduleTime = 'daily';
+                }
+                wp_schedule_event(time(), $scheduleTime, 'whp_task_hook');
+                //wp_schedule_event(time(), 'weekly', 'whp_task_hook');
+                //wp_schedule_event(time(), 'monthly', 'whp_task_hook');
             }
 
         }
@@ -87,6 +220,8 @@ function whp_plugin_activation()
         'disable_json_api' => 'on',
         'hide_includes_dir_listing' => 'on',
         'disable_file_editor' => 'on',
+        'report_email' => 'on',
+        'schedule_audit' => 'on',
     );
 
     update_option('whp_fixer_option', $init_array);
@@ -100,16 +235,6 @@ function whp_plugin_activation()
         fclose($handle);
     }
 
-}
-/**
-* Add settings action link to the plugins page.
-*/
-add_filter( 'plugin_action_links_' . plugin_basename(__FILE__), 'add_action_links' );
-function add_action_links ( $links ) {
-    $settings_link = array(
-            '<a href="' . admin_url( 'admin.php?page=wphwp_harden_fixers') . '">' . __('Settings') . '</a>',
-    );
-   return array_merge( $links, $settings_link );
 }
 
 ?>

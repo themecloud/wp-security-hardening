@@ -60,11 +60,62 @@ jQuery(document).ready(function ($) {
 
 // fixers processing
     $('body').on('click', '.trace_switch', function (e) {
+
         e.stopPropagation();
 
 
         var parent_pnt = $(this).parents('.whp-switch-wrap');
-        if ($(this).attr('checked') == 'checked') {
+        if ($(this).prop('checked') == true) {
+         
+         if ($(this).attr('id') == 'report_email') {
+
+            var stringmail = $('#custom_admin_report_email').val();
+                var emails = stringmail.split(',');
+                var i;
+                if(emails.length<=15)
+                { 
+                for (i = 0; i < emails.length; i++) {
+                    if(emails[i]!=''){  
+                    var reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+                    if (reg.test($.trim(emails[i])) == false) 
+                    {
+                            alert('Invalid Email Address: '+$.trim(emails[i]));
+                             return false;
+                    }
+                 }
+                }
+              }else{
+                alert('Only 15 emails allowed');
+              }
+
+            var data = {
+                value: 'on',
+                id: $(this).attr('id'),
+                custom_admin_report_email: stringmail,
+                action: 'process_fixer',
+                security: whp_local_data.nonce
+            }
+
+         }
+
+
+        else if ($(this).attr('id') == 'schedule_audit') {
+
+
+            var stringschedule = $('#custom_admin_schedule_audit').val();
+
+            var data = {
+                value: 'on',
+                id: $(this).attr('id'),
+                custom_admin_schedule_audit: stringschedule,
+                action: 'process_fixer',
+                security: whp_local_data.nonce
+            }
+         }
+
+
+
+         else{ 
             var data = {
                 value: 'on',
                 id: $(this).attr('id'),
@@ -72,7 +123,7 @@ jQuery(document).ready(function ($) {
                 action: 'process_fixer',
                 security: whp_local_data.nonce
             }
-
+}
             if ($(this).attr('id') == 'change_login_url') {
                 var string = $('#custom_admin_slug').val();
 
@@ -91,37 +142,109 @@ jQuery(document).ready(function ($) {
 
                 $('#custom_admin_slug').attr('readonly', true);
             }
+
+
+
+             if ($(this).attr('id') == 'report_email') {
+                $('#custom_admin_report_email').attr('readonly', true);
+            }
+
+             else if ($(this).attr('id') == 'schedule_audit') {
+                $('#custom_admin_schedule_audit').attr('disabled', true);
+            }
+
+
         } else {
-            var data = {
+           
+            if ($(this).attr('id') == 'report_email') {
+                  
+             var data = {
+                value: 'off',
+                id: $(this).attr('id'),
+                custom_admin_report_email: $('#custom_admin_report_email').val(),
+                action: 'process_fixer',
+                security: whp_local_data.nonce
+            }
+
+
+            }else if($(this).attr('id') == 'schedule_audit')
+            {
+                  
+             var data = {
+                value: 'off',
+                id: $(this).attr('id'),
+                custom_admin_schedule_audit: $('#custom_admin_schedule_audit').val(),
+                action: 'process_fixer',
+                security: whp_local_data.nonce
+            }
+            }else{
+               
+                 var data = {
                 value: 'off',
                 id: $(this).attr('id'),
                 custom_admin_slug: $('#custom_admin_slug').val(),
                 action: 'process_fixer',
                 security: whp_local_data.nonce
             }
+            }
+
+
+          
+
             if ($(this).attr('id') == 'change_login_url') {
                 $('#custom_admin_slug').attr('readonly', false);
                 $('#whp-login-change-success').removeClass('show');
                 $('#whp-login-change-success').fadeOut();
             }
+
+            if ($(this).attr('id') == 'report_email') {
+                $('#custom_admin_report_email').attr('readonly', false);
+            }
+            if ($(this).attr('id') == 'schedule_audit') {
+                $('#custom_admin_schedule_audit').attr('disabled', false);
+            }
+
+
         }
+
+ 
+
 
         jQuery.ajax({
             url: ajaxurl,
             type: 'POST',
             data: data,
             beforeSend: function (msg) {
+                
                 jQuery('body').prepend('<div class="big_loader"></div>');
             },
             success: function (msg) {
 
+ 
+                  
+               var datasuccess = jQuery.parseJSON(msg)
 
-                //console.log( msg );
+                for(var j=0;j<datasuccess.length;j++)
+                {
+                    if (typeof datasuccess[j] === "undefined") {}else{ 
+                         
+                        if($.trim(datasuccess[j])!=''){ 
+                         alert("Invalid Email Address:"+ datasuccess[j]);
+                         jQuery('.big_loader').replaceWith('');
+                         jQuery('.whp-switch-wrap #report_email').trigger('click');
+                         $('#custom_admin_report_email').attr('readonly', false);
+                        return false;
+
+                     
+                        }
+                    }
+                }
+
+               
+
 
                 jQuery('.big_loader').replaceWith('');
-
                 var obj = jQuery.parseJSON(msg);
-
                 if (obj.result == 'success') {
                     // update fixers number
                     $('#active_fixers').html(obj.is_on);

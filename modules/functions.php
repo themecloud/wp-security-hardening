@@ -21,7 +21,7 @@ function whp_remove_appended_version_script_style($target_url)
 
     return $target_url;
 }
-
+ 
 function remove_revslider_meta_tag()
 {
     return '';
@@ -78,6 +78,51 @@ class issuesScanClass
         update_option('whp_scan_results_time', current_time('timestamp'));
     }
 
+
+
+ 
+ 
+   public function wp_check_php_version() {
+        $version = phpversion();
+        $key     = md5( $version );
+
+        $response = get_site_transient( 'php_check_' . $key );
+        if ( false === $response ) {
+            $url = 'http://api.wordpress.org/core/serve-happy/1.0/';
+            if ( wp_http_supports( array( 'ssl' ) ) ) {
+                $url = set_url_scheme( $url, 'https' );
+            }
+
+            $url = add_query_arg( 'php_version', $version, $url );
+
+            $response = wp_remote_get( $url );
+
+            if ( is_wp_error( $response ) || 200 !== wp_remote_retrieve_response_code( $response ) ) {
+                return false;
+            }
+
+             
+            $response = json_decode( wp_remote_retrieve_body( $response ), true );
+
+            if ( ! is_array( $response ) ) {
+                return false;
+            }
+
+            set_site_transient( 'php_check_' . $key, $response, WEEK_IN_SECONDS );
+        }
+
+        if ( isset( $response['is_acceptable'] ) && $response['is_acceptable'] ) {
+            
+
+            $response['is_acceptable'] = (bool) apply_filters( 'wp_is_php_version_acceptable', true, $version );
+        }
+
+        return $response;
+    }
+ 
+
+
+
     public function check_php_version()
     {
 
@@ -131,6 +176,11 @@ class issuesScanClass
                 'release' => 'December 6, 2018',
                 'eol' => 'December 6, 2021',
             ),
+
+            '7.4' => array(
+                'release' => 'December 6, 2018',
+                'eol' => 'December 6, 2025',
+            ),
         );
 
         $error = __('Error checking PHP health.', 'whp');
@@ -148,7 +198,16 @@ class issuesScanClass
 
         $eol_time = strtotime($php_versions[$site_version]['eol']);
         $today = time();
-        if ($eol_time <= $today) {
+
+        $data = $this->wp_check_php_version();
+        $string = $data['recommended_version'];
+        $system =  phpversion();
+        $ststemversionExp  = explode('.', $system);
+        array_pop($ststemversionExp);
+        $system= implode('.', $ststemversionExp);
+
+
+        if ($system != $string) {
             // If EOL is passed, show unsupported message.
             $msg = $unsupported_version_message . ' ' . $unsupported_message;
 
@@ -158,7 +217,7 @@ class issuesScanClass
                 'details' => __('Move to the latest and secured version with this <a href="https://www.getastra.com/blog/cms/wordpress-security/wordpress-security-guide/#3-Update-your-PHP-to-the-latest-version">guide</a> here.', 'whp'),
             );
 
-        } elseif ($eol_time - 15552000 < $today) {
+        } elseif ($system == $string) {
             // If EOL is coming up within the next 180 days, show expiring soon message.
             $msg = $supported_version_message . ' ' . $security_ending_message;
 
@@ -494,7 +553,27 @@ class tableViewOutput
         $this->last_results = get_option('whp_scan_results');
         $this->last_results_time = get_option('whp_scan_results_time');
 
+        add_action( 'admin_notices', array($this,'remove_localstorage') );
+
     }
+
+
+public function remove_localstorage()
+    {
+
+        
+        if(isset($_REQUEST['activate']) && $_REQUEST['activate']=='true')
+        {  
+        ?>
+       <script type="text/javascript">
+        localStorage.setItem("historyvalueBrowser", '');
+        location.reload();
+    </script>
+        
+    <?php 
+}
+    }
+
 
     public function return_status($slug)
     {
@@ -1014,7 +1093,7 @@ class WHP_Change_Login_URL
         global $pagenow;
 
         if (is_admin() && !is_user_logged_in() && !defined('DOING_AJAX')) {
-            wp_die(__('You must log in to access the admin area.', 'whp'), '', array('response' => 403));
+            //wp_die(__('You must log in to access the admin area.', 'whp'), '', array('response' => 403));
         }
 
         $request = parse_url($_SERVER['REQUEST_URI']);

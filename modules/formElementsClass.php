@@ -268,7 +268,25 @@ if( !class_exists('whpFormElementsClass') ){
 						 
 										),
 									),
-									
+//Code Start by Makkpress
+									array(
+										'title' => __( 'Audit Preferences', 'whp'),
+										'variants' => array(
+								 
+											array(
+												'title' => __( 'Send Email Report to', 'whp'),
+                                                'info' => __("If you would like multiple people to recieve email updates,enter up to 15 emails id seperated by a comma.", 'whp'),
+												'slug' => 'report_email'
+											),
+											array(
+												'title' => __( 'Schedule the Audit', 'whp'),
+                                                'info' => __("Set Audit Pripority.", 'whp'),
+												'slug' => 'schedule_audit'
+											),
+						 
+										),
+									),
+//Code End  by Makkpress									
 
 
 								);
@@ -293,8 +311,60 @@ if( !class_exists('whpFormElementsClass') ){
 										$switch_options = get_option('whp_fixer_option');
 
 										foreach( $single_top['variants'] as $single_line ){
-											 
-											if( $single_line['slug'] == 'change_login_url' ){
+											
+
+											if( $single_line['slug'] == 'report_email' ){
+ 
+												$out .= '
+											<div class="row switcher_line">
+												<div class="switcher">
+													<div class="switch_cont">
+														<label class="whp-switch-wrap">
+															<input type="checkbox" '.( $switch_options[$single_line['slug']] == 'on' ? ' checked ' : '' ).'  value="on" class="trace_switch" id="'.$single_line['slug'].'" name="'.$single_line['slug'].'" />
+															<div class="whp-switch"></div>
+														</label>
+													</div>
+												</div>
+												<div class="description" data-balloon-length="large" aria-label="' . $single_line['info'] . '" data-balloon-pos="up">'.$single_line['title'].'</div>
+												<div class="slug_container">
+													 <textarea data-balloon-pos="up" style="height:100px; background-color: #fafafa; border: solid 1px #ebebeb;width:400px; margin-left:10px;"  id="custom_admin_report_email" '.( $switch_options[$single_line['slug']] == 'on' ? 'readonly' : '' ).'  placeholder="'.__('Enter your email addresss. If you would like multiple people to recieve email updates,enter up to 15 emails id seperated by a comma.','whp').'">'.get_option( 'custom_admin_report_email').'</textarea>
+												</div>
+											</div>';
+
+
+											}
+
+
+											elseif( $single_line['slug'] == 'schedule_audit' ){
+ 		
+ 
+	 
+
+													$out .= '
+												<div class="row switcher_line">
+													<div class="switcher">
+														<div class="switch_cont">
+															<label class="whp-switch-wrap">
+																<input type="checkbox" '.( $switch_options[$single_line['slug']] == 'on' ? ' checked ' : '' ).'  value="on" class="trace_switch" id="'.$single_line['slug'].'" name="'.$single_line['slug'].'" />
+																<div class="whp-switch"></div>
+															</label>
+														</div>
+													</div>
+													<div class="description" style="min-width:156px;" data-balloon-length="large" aria-label="' . $single_line['info'] . '" data-balloon-pos="up">'.$single_line['title'].'</div>
+													<div class="slug_container">
+													<select id="custom_admin_schedule_audit" '.( $switch_options[$single_line['slug']] == 'on' ? 'disabled' : '' ).' style="background-color: #fafafa;border: solid 1px #ebebeb; margin-left:10px;">
+														<option value="every day" '. ( get_option( 'custom_admin_schedule_audit') == 'every day' ? 'selected' : '' ) . '>every day</option>
+														<option value="every week" ' . ( get_option( 'custom_admin_schedule_audit') == 'every week' ? 'selected' : '' ) . '>every week</option>
+														<option value="every month" ' . ( get_option( 'custom_admin_schedule_audit') == 'every month' ? 'selected' : '' ) . '>every month</option>
+													</select>
+														  
+													</div>
+												</div>';
+
+
+											}
+
+											elseif( $single_line['slug'] == 'change_login_url' ){
 												$out .= '
 											<div class="row switcher_line">
 												<div class="switcher">
