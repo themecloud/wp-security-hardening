@@ -1,6 +1,4 @@
 <?php
-require_once(dirname(dirname(dirname(__FILE__)))."/../../wp-includes/pluggable.php");
-require_once(dirname(dirname(dirname(__FILE__)))."/../../wp-load.php");
 
 if (!defined('ABSPATH')) exit ('Peekaboo!');
 
@@ -13,67 +11,49 @@ function wh_admin_footer(){
 add_action('init', 'fake_cron_function');
 function fake_cron_function(){
 	$last_run = get_option('hard_cron');
-	$schedule_audit = get_option('custom_admin_schedule_audit');
- 	
 	if( $last_run == '' || !$last_run ){
 		$last_run = time();
 		update_option('hard_cron', $last_run  );
 	}
 
-	if( trim($schedule_audit) =='every day' && (time() - $last_run  > 60*60*24) ){
+	if( time() - $last_run  > 60*60*24 ){
 		
 		whp_task_function();
 		
 		$last_run = time();
 		update_option('hard_cron', $last_run  );
 	}
-
-	elseif( trim($schedule_audit) =='every week' && (time() - $last_run  > 60*60*24*7) ){
-		
-		whp_task_function();
-		
-		$last_run = time();
-		update_option('hard_cron', $last_run  );
-	}
-
-
-	elseif( trim($schedule_audit) =='every month' && (time() - $last_run  > 60*60*24*30) ){
-		
-		whp_task_function();
-		
-		$last_run = time();
-		update_option('hard_cron', $last_run  );
-	}
-	elseif(time() - $last_run  > 60*60*24*30){
-
-		whp_task_function();
-		
-		$last_run = time();
-		update_option('hard_cron', $last_run  );
-
-	}
-
 }
 
- // whp_task_function();
+  
   function whp_task_function() {
-
 		global $wpdb;
 
 		$tnp = new issuesScanClass();
 		$tnp->run_issues_check();
+
+	
 		$obj = new tableViewOutput();
 		$obj->process_results();
+	 
 		$resom_amount = $obj->get_recommendations_amount();
+
 		$issues_list = $obj->generate_widget_list( 10 );
 
 		$subject = sprintf( __('%d WordPress Hardening recommendations for %s',  'whp'), $resom_amount, get_option('home') );
 
-		 // getting list of users
-		 $report_mail_array = get_option('custom_admin_report_email');
-		 $report_mails = explode(',',$report_mail_array);
-		if( count($report_mails) > 0 ){
-			foreach( $report_mails as $report_mail ){
+
+		// getting list of users
+  		$user_ids = $wpdb->get_col("SELECT user_id FROM {$wpdb->prefix}usermeta WHERE meta_key = 'whp_subscribed_email'");
+
+  		/*
+		if( count($user_ids) > 0 ){
+			foreach( $user_ids as $single_id ){
+
+				$user_email = get_user_meta( $single_id, 'whp_subscribed_email', true );
+
+				$user_data = get_userdata( $single_id );
+
 				$content = sprintf( __('
 				<p>Howdy! %s</p>
 			
@@ -90,16 +70,15 @@ function fake_cron_function(){
 				<p>Thanks,</p>
 				<p>Ananda from Astra</p>
 
-				',  'whp'), '', get_option('home'), $issues_list, admin_url('/admin.php?page=wphwp_harden#audit_bottom_block') ); 
+				',  'whp'), $user_data->user_login, get_option('home'), $issues_list, admin_url('/admin.php?page=wphwp_harden#audit_bottom_block') ); 
+				$headers = array('Content-Type: text/html; charset=UTF-8');
 
-				$headers[]= "MIME-Version: 1.0" . "\r\n";
-				$headers[]= "Content-type:text/html;charset=UTF-8" . "\r\n";
-				$headers[]= 'From: <ak@getastra.com>' . "\r\n";
-				wp_mail( $report_mail, $subject, $content, $headers);
-			
+				//var_dump( $content );
+
+				wp_mail( $user_email, $subject, $content, $headers);
 			}
 		}
-		 
+		*/
 	
 		
   }

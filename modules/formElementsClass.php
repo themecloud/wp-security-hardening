@@ -269,19 +269,33 @@ if( !class_exists('whpFormElementsClass') ){
 										),
 									),
  
+								 
+
+
 									array(
-										'title' => __( 'Audit Preferences', 'whp'),
+										'title' => __( 'Security Headers', 'whp'),
 										'variants' => array(
 								 
 											array(
-												'title' => __( 'Send Email Report to', 'whp'),
-                                                'info' => __("If you would like multiple people to recieve email updates,enter up to 15 emails id seperated by a comma.", 'whp'),
-												'slug' => 'report_email'
+												'title' => __( 'Clickjacking Protection', 'whp'),
+                                                'info' => __("On enabling this setting your WordPress Website is protected from clickjacking. Clickjacking is an attack that tricks a user into clicking a webpage element which is invisible or disguised as another element.", 'whp'),
+												'slug' => 'clickjacking_protection'
 											),
 											array(
-												'title' => __( 'Schedule the Audit', 'whp'),
-                                                'info' => __("Set Audit Pripority.", 'whp'),
-												'slug' => 'schedule_audit'
+												'title' => __( 'XSS Protection', 'whp'),
+                                                'info' => __("On enabling this setting your WordPress Website is protected from XSS attacks. Cross-Site Scripting (XSS) attacks are a type of injection, in which malicious scripts are injected into otherwise benign and trusted websites.", 'whp'),
+												'slug' => 'xss_protection'
+											),
+											array(
+												'title' => __( 'Content Sniffing protection', 'whp'),
+                                                'info' => __("On enabling this setting your WordPress Website is protected from Content Sniffing. An attacker can leverage Content Sniffing to send an XSS Attack.", 'whp'),
+												'slug' => 'content_sniffing_protection'
+											),
+
+											array(
+												'title' => __( 'HTTP only & Secure flag', 'whp'),
+                                                'info' => __("On enabling this setting your WordPress Website is protected from XSS attacks. HttpOnly and secure flags can be used to make the cookies more secure. When a secure flag is used, then the cookie will only be sent over HTTPS. When HttpOnly flag is used, JavaScript will not be able to read the cookie in case of XSS exploitation..", 'whp'),
+												'slug' => 'http_secure_flag'
 											),
 						 
 										),
@@ -313,58 +327,12 @@ if( !class_exists('whpFormElementsClass') ){
 										foreach( $single_top['variants'] as $single_line ){
 											
 
-											if( $single_line['slug'] == 'report_email' ){
- 
-												$out .= '
-											<div class="row switcher_line">
-												<div class="switcher">
-													<div class="switch_cont">
-														<label class="whp-switch-wrap">
-															<input type="checkbox" '.( $switch_options[$single_line['slug']] == 'on' ? ' checked ' : '' ).'  value="on" class="trace_switch" id="'.$single_line['slug'].'" name="'.$single_line['slug'].'" />
-															<div class="whp-switch"></div>
-														</label>
-													</div>
-												</div>
-												<div class="description" data-balloon-length="large" aria-label="' . $single_line['info'] . '" data-balloon-pos="up">'.$single_line['title'].'</div>
-												<div class="slug_container">
-													 <textarea data-balloon-pos="up" style="height:100px; background-color: #fafafa; border: solid 1px #ebebeb;width:400px; margin-left:10px;"  id="custom_admin_report_email" '.( $switch_options[$single_line['slug']] == 'on' ? 'readonly' : '' ).'  placeholder="'.__('Enter your email addresss. If you would like multiple people to recieve email updates,enter up to 15 emails id seperated by a comma.','whp').'">'.get_option( 'custom_admin_report_email').'</textarea>
-												</div>
-											</div>';
+											 
 
 
-											}
+										 
 
-
-											elseif( $single_line['slug'] == 'schedule_audit' ){
- 		
- 
-	 
-
-													$out .= '
-												<div class="row switcher_line">
-													<div class="switcher">
-														<div class="switch_cont">
-															<label class="whp-switch-wrap">
-																<input type="checkbox" '.( $switch_options[$single_line['slug']] == 'on' ? ' checked ' : '' ).'  value="on" class="trace_switch" id="'.$single_line['slug'].'" name="'.$single_line['slug'].'" />
-																<div class="whp-switch"></div>
-															</label>
-														</div>
-													</div>
-													<div class="description" style="min-width:156px;" data-balloon-length="large" aria-label="' . $single_line['info'] . '" data-balloon-pos="up">'.$single_line['title'].'</div>
-													<div class="slug_container">
-													<select id="custom_admin_schedule_audit" '.( $switch_options[$single_line['slug']] == 'on' ? 'disabled' : '' ).' style="background-color: #fafafa;border: solid 1px #ebebeb; margin-left:10px;">
-														<option value="every day" '. ( get_option( 'custom_admin_schedule_audit') == 'every day' ? 'selected' : '' ) . '>every day</option>
-														<option value="every week" ' . ( get_option( 'custom_admin_schedule_audit') == 'every week' ? 'selected' : '' ) . '>every week</option>
-														<option value="every month" ' . ( get_option( 'custom_admin_schedule_audit') == 'every month' ? 'selected' : '' ) . '>every month</option>
-													</select>
-														  
-													</div>
-												</div>';
-
-
-											}
-
-											elseif( $single_line['slug'] == 'change_login_url' ){
+											if( $single_line['slug'] == 'change_login_url' ){
 												$out .= '
 											<div class="row switcher_line">
 												<div class="switcher">
@@ -382,7 +350,45 @@ if( !class_exists('whpFormElementsClass') ){
 													 <input type="text" data-balloon-pos="up" id="custom_admin_slug" '.( $switch_options[$single_line['slug']] == 'on' ? ' readonly ' : '' ).' value="'.get_option( 'whp_admin_page').'" placeholder="'.__('Enter new slug','whp').'">
 												</div>
 											</div>';
-											}else{
+											}
+											elseif( $single_line['slug'] == 'clickjacking_protection' ){
+												get_option( 'custom_admin_report_email');
+												$out .= '
+											<div class="row switcher_line">
+												<div class="switcher">
+													<div class="switch_cont switch-accodin">
+														 
+
+																<form action="" id="searchTypeToggle">
+																  <div></div>
+																  <label class="'. ( get_option( 'radio_clickjacking_protection') == '1' ? 'selected' : '' ) . '">
+																    <input type="radio" class="trace_switch" name="radio_clickjacking_protection" id="radio_clickjacking_protection" data-location="0" value="1" >
+																    <div>Disable</div>
+																  </label>
+																  <label class="'. ( get_option( 'radio_clickjacking_protection') == '2' ? 'selected' : '' ) . '">
+																    <input type="radio" class="trace_switch" name="radio_clickjacking_protection" id="radio_clickjacking_protection" data-location="calc(100% - 8px)" value="2" >
+																    <div>Deny</div>
+																  </label>
+																  <label class="'. ( get_option( 'radio_clickjacking_protection') == '3' ? 'selected' : '' ) . '">
+																    <input type="radio" class="trace_switch" name="radio_clickjacking_protection" id="radio_clickjacking_protection" data-location="calc(200% - 12px)" value="3" >
+																    <div>Same Origin</div>
+																  </label>
+																</form>
+
+
+															 
+															 
+														 
+													</div>
+												</div>
+												
+												<div class="description" data-balloon-length="large" aria-label="' . $single_line['info'] . '" data-balloon-pos="up">'.$single_line['title'].'</div>
+
+												 
+											</div>';
+											}
+
+											else{
 												$out .= '
 											<div class="row switcher_line">
 												<div class="switcher">

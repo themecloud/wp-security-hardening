@@ -128,6 +128,10 @@ function whp_process_fixer()
 
         update_option('whp_fixer_option', $fixer_options);
 
+ 
+ 
+
+
         switch ($id) {
             case "hide_includes_dir_listing":
                 if ($value == 'on') {
@@ -157,6 +161,58 @@ function whp_process_fixer()
                     delete_site_option('whp_admin_page');
                     delete_option('whp_admin_page');
                 }
+
+
+
+             // xss protection   
+            case "radio_clickjacking_protection":
+
+                if ($value != '') {
+ 
+                    update_site_option('radio_clickjacking_protection', $value);
+                    update_option('radio_clickjacking_protection', $value);
+                } else {
+                    delete_site_option('radio_clickjacking_protection');
+                    delete_option('radio_clickjacking_protection');
+                }
+
+
+
+            // xss protection
+            case "xss_protection":
+
+                if ($value == 'on') {
+                    update_site_option('xss_protection', $value);
+                    update_option('xss_protection', $value);
+                } else {
+                    delete_site_option('xss_protection');
+                    delete_option('xss_protection');
+                }
+
+
+            // content sniffing protection
+            case "content_sniffing_protection":
+
+                if ($value == 'on') {
+                   update_site_option('content_sniffing_protection', $value);
+                    update_option('content_sniffing_protection', $value);
+                } else {
+                    delete_site_option('content_sniffing_protection');
+                    delete_option('content_sniffing_protection');
+                }   
+                
+
+            // http secure flag
+            case "http_secure_flag":
+
+                if ($value == 'on') {
+                    update_site_option('http_secure_flag', $value);
+                    update_option('http_secure_flag', $value);
+                } else {
+                    delete_site_option('http_secure_flag');
+                    delete_option('http_secure_flag');
+                } 
+
 
 
             // save report email values
