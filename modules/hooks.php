@@ -94,7 +94,7 @@ function fake_cron_function(){
 
 				$headers[]= "MIME-Version: 1.0" . "\r\n";
 				$headers[]= "Content-type:text/html;charset=UTF-8" . "\r\n";
-				$headers[]= 'From: <ak@getastra.com>' . "\r\n";
+				
 				wp_mail( $report_mail, $subject, $content, $headers);
 			
 			}
