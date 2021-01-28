@@ -21,7 +21,7 @@ if (!class_Exists('wphMainStart')) {
 
         function __construct($locale, $includes, $path)
         {
-
+ 
             $this->locale = $locale;
 
             // include files
