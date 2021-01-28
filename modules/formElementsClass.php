@@ -14,8 +14,8 @@ if( !class_exists('whpFormElementsClass') ){
 			$this->type = $type;
 			$this->parameters = $parameters;
 			$this->value = $value;
-			
-			
+
+
 			$this->generate_result_block();
  
 		}
@@ -275,12 +275,12 @@ if( !class_exists('whpFormElementsClass') ){
 								 
 											array(
 												'title' => __( 'Send Email Report to', 'whp'),
-                                                'info' => __("If you would like multiple people to recieve email updates,enter up to 15 emails id seperated by a comma.", 'whp'),
+                                                'info' => __("If you would like multiple people to receive email updates, enter up to 15 email id separated by a comma.", 'whp'),
 												'slug' => 'report_email'
 											),
 											array(
 												'title' => __( 'Schedule the Audit', 'whp'),
-                                                'info' => __("Set Audit Pripority.", 'whp'),
+                                                'info' => __("Set Audit Priority.", 'whp'),
 												'slug' => 'schedule_audit'
 											),
 						 

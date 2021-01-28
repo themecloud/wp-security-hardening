@@ -1,6 +1,6 @@
 <?php
-require_once(dirname(dirname(dirname(__FILE__)))."/../../wp-includes/pluggable.php");
-require_once(dirname(dirname(dirname(__FILE__)))."/../../wp-load.php");
+require_once(dirname(__FILE__, 3) . "/../../wp-includes/pluggable.php");
+require_once(dirname(__FILE__, 3) . "/../../wp-load.php");
 
 if (!defined('ABSPATH')) exit ('Peekaboo!');
 
@@ -55,7 +55,7 @@ function fake_cron_function(){
 
 }
 
- // whp_task_function();
+  //whp_task_function();
   function whp_task_function() {
 
 		global $wpdb;
