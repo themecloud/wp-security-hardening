@@ -33,35 +33,10 @@ if (!class_Exists('wphMainStart')) {
             add_filter('plugin_action_links_'.plugin_basename(__FILE__), array($this,'wp_security_hardening_settings_link'));
             add_action( 'admin_notices', array($this,'custom_notice_bar') );
             add_action( 'admin_notices', array($this,'add_css_plugin') );
-             add_action( 'init', array($this,'initialize_value') );
-
              
         }
 
 
-function initialize_value()
-{
-  
-        update_site_option('custom_admin_report_email', 'on');
-        update_site_option('custom_admin_schedule_audit', 'on');
-        update_site_option('radio_clickjacking_protection', 'on');
-        update_site_option('xss_protection', 'on');
-        update_site_option('content_sniffing_protection', 'on');
-        update_site_option('http_secure_flag', 'on');
-
-        $whp_fixer_option =  get_option( 'whp_fixer_option');
-        $whp_fixer_option['report_email'] = 'on';
-        $whp_fixer_option['schedule_audit'] = 'on';
-        $whp_fixer_option['clickjacking_protection'] = 'on';
-        $whp_fixer_option['xss_protection'] = 'on';
-        $whp_fixer_option['content_sniffing_protection'] = 'on';
-        $whp_fixer_option['http_secure_flag'] = 'on';
-
-        $filterdata = serialize($whp_fixer_option);
-        update_site_option('whp_fixer_option', $whp_fixer_option);
-}
-
- 
 
 function add_css_plugin()
 {
