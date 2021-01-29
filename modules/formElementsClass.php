@@ -327,7 +327,7 @@ if( !class_exists('whpFormElementsClass') ){
 												</div>
 												<div class="description" data-balloon-length="large" aria-label="' . $single_line['info'] . '" data-balloon-pos="up">'.$single_line['title'].'</div>
 												<div class="slug_container">
-													 <textarea data-balloon-pos="up" style="height:100px; background-color: #fafafa; border: solid 1px #ebebeb;width:400px; margin-left:10px;"  id="custom_admin_report_email" '.( $switch_options[$single_line['slug']] == 'on' ? 'readonly' : '' ).'  placeholder="'.__('Enter your email addresss. If you would like multiple people to recieve email updates,enter up to 15 emails id seperated by a comma.','whp').'">'.get_option( 'custom_admin_report_email').'</textarea>
+													 <textarea data-balloon-pos="up" style="height:100px; background-color: #fafafa; border: solid 1px #ebebeb;width:400px; margin-left:10px;"  id="custom_admin_report_email" '.( $switch_options[$single_line['slug']] == 'on' ? 'readonly' : '' ).'  placeholder="'.__('Enter your email address. If you would like multiple people to recieve email updates,enter up to 15 emails id seperated by a comma.','whp').'">'.get_option( 'custom_admin_report_email').'</textarea>
 												</div>
 											</div>';
 
