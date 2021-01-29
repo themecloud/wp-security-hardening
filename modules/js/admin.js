@@ -70,7 +70,14 @@ jQuery(document).ready(function ($) {
          if ($(this).attr('id') == 'report_email') {
 
             var stringmail = $('#custom_admin_report_email').val();
-                var emails = stringmail.split(',');
+
+             if(stringmail.length<1)
+             {
+                 alert('Please enter an email address');
+                 return false;
+             }
+
+                 var emails = stringmail.split(',');
                 var i;
                 if(emails.length<=15)
                 { 
@@ -79,7 +86,7 @@ jQuery(document).ready(function ($) {
                     var reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
                     if (reg.test($.trim(emails[i])) == false) 
                     {
-                            alert('Invalid Email Address: '+$.trim(emails[i]));
+                            alert('Invalid Email Address');
                              return false;
                     }
                  }
