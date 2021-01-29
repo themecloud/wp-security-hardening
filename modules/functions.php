@@ -566,7 +566,7 @@ public function remove_localstorage()
         {  
         ?>
        <script type="text/javascript">
-        localStorage.setItem("historyvalueBrowser", '');
+        localStorage.setItem("wphShowAdminPrompt", '');
         location.reload();
     </script>
         

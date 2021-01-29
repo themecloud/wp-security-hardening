@@ -97,7 +97,7 @@ if(isset($_REQUEST['historyvalue']) && $_REQUEST['historyvalue']!='')
 {
     ?>
     <script type="text/javascript">
-        localStorage.setItem("historyvalueBrowser", '<?php echo $_REQUEST['historyvalue'];?>');
+        localStorage.setItem("wphShowAdminPrompt", '<?php echo $_REQUEST['historyvalue'];?>');
     </script>
     <?php 
 }
@@ -120,9 +120,9 @@ if(isset($_REQUEST['historyvalue']) && $_REQUEST['historyvalue']!='')
         
     </div>
      <script type="text/javascript">
-        var historyvalueBrowser = localStorage.getItem("historyvalueBrowser");
+        var wphShowAdminPrompt = localStorage.getItem("wphShowAdminPrompt");
          
-        if(historyvalueBrowser=='1')
+        if(wphShowAdminPrompt=='1')
         {  
            document.getElementById('activate_plugin_message').style.display = 'none';
         }else{
