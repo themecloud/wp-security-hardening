@@ -550,7 +550,7 @@ class tableViewOutput
 
         );
 
-        $this->last_results = get_option('whp_scan_results');
+        $this->last_results = get_option('whp_scan_results', array());
         $this->last_results_time = get_option('whp_scan_results_time');
 
         add_action( 'admin_notices', array($this,'remove_localstorage') );
@@ -605,13 +605,14 @@ public function remove_localstorage()
         }
 
         $current_points = 0;
-        $this->last_results = get_option('whp_scan_results');
-        if (count((array)$this->last_results) > 0)
+        $this->last_results = get_option('whp_scan_results', array());
+        if (count((array)$this->last_results) > 0) {
             foreach ((array)$this->last_results as $key => $value) {
                 if ($value['status'] == 'success') {
                     $current_points = $current_points + $this->issues_list[$key]['weight'];
                 }
             }
+        }
         $pers = (int)($current_points * 100 / $total_points);
         return $pers;
     }
