@@ -6,10 +6,10 @@ if (!defined('ABSPATH')) exit ('Peekaboo!');
 Plugin Name: WP Hardening
 Plugin URI: https://www.getastra.com/
 Description: Harden your WordPress security by fixing 20 common security loopholes by just a click.
-Version: 1.1.2
+Version: 1.2
 Author: Astra Security
 Author URI: https://www.getastra.com/
-Stable tag: 1.1.2
+Stable tag: 1.2
 */
 
 
@@ -219,7 +219,7 @@ function whp_plugin_activation()
         'disable_json_api' => 'on',
         'hide_includes_dir_listing' => 'on',
         'disable_file_editor' => 'on',
-        'report_email' => 'on',
+        'report_email' => 'off',
         'schedule_audit' => 'on',
     );
 
@@ -233,6 +233,11 @@ function whp_plugin_activation()
         $handle = fopen(ABSPATH . "wp-includes/index.php", "w");
         fclose($handle);
     }
+
+    /* Run the first audit */
+
+    $tnp = new issuesScanClass();
+    $tnp->run_issues_check();
 
 }
 
