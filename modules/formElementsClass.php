@@ -22,7 +22,7 @@ if( !class_exists('whpFormElementsClass') ){
  
 		}
 
-		function getFixerOption($key, $default){
+		function getFixerOption($key, $default = ''){
             if(isset($this->fixerOptions[$key])){
                 return $this->fixerOptions[$key];
             }else{
@@ -113,14 +113,14 @@ if( !class_exists('whpFormElementsClass') ){
 													<div class="switcher">
 														<div class="switch_cont">
 															<label class="whp-switch-wrap">
-																<input type="checkbox" '.( $this->getFixerOption('schedule_audit') == 'on' ? ' checked ' : '' ).'  value="on" class="trace_switch" id="schedule_audit" name="schedule_audit" />
+																<input type="checkbox" '.( $this->getFixerOption('schedule_audit', 'off') == 'on' ? ' checked ' : '' ).'  value="on" class="trace_switch" id="schedule_audit" name="schedule_audit" />
 																<div class="whp-switch"></div>
 															</label>
 														</div>
 													</div>
 													<div class="description" style="min-width:156px;" data-balloon-length="large" aria-label="Configure how often you would like the Hardening Audit to be run" data-balloon-pos="up">Schedule the Audit</div>
 													<div class="slug_container">
-													<select id="custom_admin_schedule_audit" '.( $this->getFixerOption('schedule_audit') == 'on' ? 'disabled' : '' ).' style="background-color: #fafafa;border: solid 1px #ebebeb; margin-left:10px;">
+													<select id="custom_admin_schedule_audit" '.( $this->getFixerOption('schedule_audit', 'off') == 'on' ? 'disabled' : '' ).' style="background-color: #fafafa;border: solid 1px #ebebeb; margin-left:10px;">
 														<option value="every day" '. ( get_option( 'custom_admin_schedule_audit', 'every week') == 'every day' ? 'selected' : '' ) . '>every day</option>
 														<option value="every week" ' . ( get_option( 'custom_admin_schedule_audit', 'every week') == 'every week' ? 'selected' : '' ) . '>every week</option>
 														<option value="every month" ' . ( get_option( 'custom_admin_schedule_audit', 'every week') == 'every month' ? 'selected' : '' ) . '>every month</option>
@@ -135,14 +135,14 @@ if( !class_exists('whpFormElementsClass') ){
 												<div class="switcher">
 													<div class="switch_cont">
 														<label class="whp-switch-wrap">
-															<input type="checkbox" '.( $this->getFixerOption('report_email') == 'on' ? ' checked ' : '' ).'  value="on" class="trace_switch" id="report_email" name="report_email" />
+															<input type="checkbox" '.( $this->getFixerOption('report_email', 'off') == 'on' ? ' checked ' : '' ).'  value="on" class="trace_switch" id="report_email" name="report_email" />
 															<div class="whp-switch"></div>
 														</label>
 													</div>
 												</div>
 												<div class="description" data-balloon-length="large" aria-label="If you would like multiple people to receive email updates, enter up to 15 email ids separated by a comma." data-balloon-pos="up">Send Email Report to</div>
 												<div class="slug_container">
-													 <textarea data-balloon-pos="up" style="height:100px; background-color: #fafafa; border: solid 1px #ebebeb;width:400px; margin-left:10px;"  id="custom_admin_report_email" '.( $this->getFixerOption('report_email') == 'on' ? 'readonly' : '' ).'  placeholder="'.__('Enter your email address. If you would like multiple people to receive email updates, enter up to 15 email ids separated by a comma.','whp').'">'.get_option( 'custom_admin_report_email').'</textarea>
+													 <textarea data-balloon-pos="up" style="height:100px; background-color: #fafafa; border: solid 1px #ebebeb;width:400px; margin-left:10px;"  id="custom_admin_report_email" '.( $this->getFixerOption('report_email', 'off') == 'on' ? 'readonly' : '' ).'  placeholder="'.__('Enter your email address. If you would like multiple people to receive email updates, enter up to 15 email ids separated by a comma.','whp').'">'.get_option( 'custom_admin_report_email').'</textarea>
 												</div>
 											</div>
 											</div>
