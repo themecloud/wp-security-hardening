@@ -500,6 +500,27 @@
 .audit_process_container .audit_bottom_block .passed_tab{
 	display:none;
 }
+
+.audit_process_container .audit_bottom_block .settings_tab{
+	display:none;
+}
+
+.audit_process_container .audit_bottom_block .switcher_line{
+	padding: 20px 20px;
+}
+
+.audit_process_container .audit_bottom_block .switcher_line .switcher {
+	float: left;
+	width: 20%;
+	text-align: center;
+}
+
+.audit_process_container .audit_bottom_block .switcher_line .description {
+	float: left;
+	font-size: 16px;
+	font-weight: 500;
+	padding: 6px 0;
+}
 /* ####### Blocks styling END ########### */
 
 #collapse_all{

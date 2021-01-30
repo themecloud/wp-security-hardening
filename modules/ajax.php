@@ -148,6 +148,7 @@ function whp_process_fixer()
             case "change_login_url":
 
                 if ($value == 'on') {
+                    
                     $admin_url = sanitize_title($_POST['custom_admin_slug']);
                     update_site_option('whp_admin_page', $admin_url);
                     update_option('whp_admin_page', $admin_url);
@@ -157,6 +158,53 @@ function whp_process_fixer()
                     delete_option('whp_admin_page');
                 }
 
+
+            // save report email values
+            case "report_email":
+ 
+                $emaildata = $_POST['custom_admin_report_email'];
+                $dataarray = explode(",",trim($emaildata));
+                for($i=0;$i<count($dataarray);$i++)
+                {
+                   
+                    if(!filter_var(trim($dataarray[$i]), FILTER_VALIDATE_EMAIL))
+                    {
+                       $arrayEmailInvalid[]= trim($dataarray[$i]);
+                    } 
+                    
+                }
+                 
+                $dataemailerror = count($arrayEmailInvalid); 
+                if($dataemailerror>1)
+                {  
+                    echo json_encode($arrayEmailInvalid);
+                    die;
+                }
+                if ($fixer_options['report_email'] == 'on') {
+                    $custom_admin_report_email = $_POST['custom_admin_report_email'];
+                    update_site_option('custom_admin_report_email', $custom_admin_report_email);
+                    update_option('custom_admin_report_email', $custom_admin_report_email);
+                } else { 
+                    
+                    $custom_admin_report_email = sanitize_title($_POST['custom_admin_report_email']);
+                    delete_site_option('custom_admin_report_email');
+                    delete_option('custom_admin_report_email');
+                } 
+
+
+            // save Schedule Audit values
+            case "schedule_audit":
+            if ($_POST['id'] == 'schedule_audit') { 
+                if ($fixer_options['schedule_audit'] == 'on') { 
+                    $custom_admin_schedule_audit = $_POST['custom_admin_schedule_audit'];
+                    update_site_option('custom_admin_schedule_audit', $custom_admin_schedule_audit);
+                    update_option('custom_admin_schedule_audit', $custom_admin_schedule_audit);
+                } else { 
+                    $custom_admin_schedule_audit = sanitize_title($_POST['custom_admin_schedule_audit']);
+                    delete_site_option('custom_admin_schedule_audit');
+                    delete_option('custom_admin_schedule_audit');
+                }       
+             }   
 
                 break;
 
