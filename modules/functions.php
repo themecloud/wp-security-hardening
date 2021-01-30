@@ -206,15 +206,15 @@ class issuesScanClass
         array_pop($ststemversionExp);
         $system= implode('.', $ststemversionExp);
 
-
         if ($system != $string) {
             // If EOL is passed, show unsupported message.
             $msg = $unsupported_version_message . ' ' . $unsupported_message;
 
+
             $this->response_results['php_version'] = array(
                 'status' => 'error',
-                'message' => __('Your current PHP version is outdated and can invite hackers.', 'whp'),
-                'details' => __('Move to the latest and secured version with this <a href="https://www.getastra.com/blog/cms/wordpress-security/wordpress-security-guide/#3-Update-your-PHP-to-the-latest-version">guide</a> here.', 'whp'),
+                'message' => sprintf(__('Your current PHP version (%s) is outdated and can invite hackers.', 'whp'), $system),
+                'details' => sprintf(__('Move to the latest and secured version (%s) with this <a href="https://www.getastra.com/blog/cms/wordpress-security/wordpress-security-guide/#3-Update-your-PHP-to-the-latest-version">guide</a> here.', 'whp'), $data['recommended_version']),
             );
 
         } elseif ($system == $string) {
