@@ -51,6 +51,7 @@ function whpDatabaseUpgrade($defaults = array())
 
     if($changes > 0){
         update_option('whp_fixer_option', $stored);
+        update_option('whp_radio_clickjacking_protection', '3');
     }
 
 }
@@ -91,7 +92,9 @@ if (!class_Exists('wphMainStart')) {
             }
 
             if (get_option('whp_http_secure_flag') == 'on') {
-                header("Set-Cookie: name=value; httpOnly");
+                @ini_set('session.cookie_httponly', true);
+                @ini_set('session.cookie_secure', true);
+                @ini_set('session.use_only_cookies', true);
             }
 
 
