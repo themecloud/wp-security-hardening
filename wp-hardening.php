@@ -5,7 +5,7 @@ if (!defined('ABSPATH')) exit ('Peekaboo!');
 /*
 Plugin Name: WP Hardening
 Plugin URI: https://www.getastra.com/
-Description: Harden your WordPress security by fixing 20 common security loopholes by just a click.
+Description: Harden your WordPress security by fixing 25 common security loopholes by just a click.
 Version: 1.2
 Author: Astra Security
 Author URI: https://www.getastra.com/
@@ -41,6 +41,10 @@ function whpDatabaseUpgrade($defaults = array())
 {
     $stored = get_option('whp_fixer_option', array());
     $changes = 0;
+
+    if(!is_array($stored)){
+        $stored = array();
+    }
 
     foreach($defaults as $key => $value){
         if(!isset($stored[$key])){
@@ -201,7 +205,7 @@ if (!class_Exists('wphMainStart')) {
 
                         <div class="notice-img"><img
                                     src="<?php echo esc_url(plugins_url('/modules/images/cta.png', __FILE__)) ?>"></div>
-                        <?php _e('We have enabled 12 security fixes to protect your site. Please review them here.', 'wp-security-hardening'); ?>
+                        <?php _e('We have enabled 18 security fixes to protect your site. Please review them here.', 'wp-security-hardening'); ?>
                     </a>
 
                     <form action="<?php echo $_SERVER['REQUEST_URI']; ?>" method="post">

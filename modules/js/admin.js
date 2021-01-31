@@ -150,7 +150,7 @@ $('form input').click(function(event){
                 if (!isAlphaOrParen(string)) {
                     e.preventDefault();
                     alert(whp_local_data.wrong_admin);
-                    $('#change_login_url').click();
+                    //$('#change_login_url').click();
                     return true;
                 }
 
