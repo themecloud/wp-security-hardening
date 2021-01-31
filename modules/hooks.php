@@ -260,10 +260,10 @@ function whp_init_redirect(){
 	
 
 	if( $_GET['page'] == 'wphwp_harden_help' ){
-		$url = 'https://www.getastra.com/kb/kb/wp-harden';
+		$url = 'https://www.getastra.com/kb/kb/wp-hardening/';
 	}
 	if( $_GET['page'] == 'wphwp_harden_upgrade' ){
-		$url = 'https://www.getastra.com/?ref=wp-harden';
+		$url = 'https://www.getastra.com/?ref=wp-hardening';
 	}
 	if( $url ){
 		wp_Redirect( $url, 302 );
