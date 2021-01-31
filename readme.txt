@@ -3,8 +3,8 @@ Contributors: astrasecuritysuite, wizak, shikhil
 Donate link: https://www.getastra.com
 Tags:  security, hardening, xmlrpc, user enumeration, custom login url, admin url, Disable WP API JSON, Disable File Editor, Hide WP-includes, WP-content, Remove Version Stylesheet, Remove Version Script, Remove Slider Revolution Meta Generator
 Requires at least: 4.3
-Tested up to: 5.4.2
-Stable tag: 1.1.2
+Tested up to: 5.6
+Stable tag: 1.2
 Requires PHP: 5.3
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -68,6 +68,8 @@ XMLRPC is often targeted by bots to perform brute force &amp; DDoS attacks (via 
 Since 4.4 version, WordPress added JSON REST API which largely benefits developers. However, it’s often targeted for bruteforce attacks just like in the case of xmlrpc. If you are not using it, best is to disable it.<br></li>
   <li><strong>Disable File Editor</strong> 
 If a hacker is able to get access to your WordPress admin, with the file editor enabled it becomes quite easy for them to add malicious code to your theme or plugins. If you are not using this, it’s best to keep the file editor disabled.<br></li>
+  <li><strong>Disable WordPress Application Passwords</strong>
+   WordPress application passwords have full permissions of the user that generated them, making it possible for an attacker to gain control of a website by tricking the site administrator into granting permission to their malicious application.<br></li>
 </ol>
 
 
@@ -101,6 +103,20 @@ If a hacker is able to get access to your WordPress admin, with the file editor 
 <ol>
 	<li><strong>Hide Directory Listing of WP includes</strong>
 WP-includes directory gives away a lot of information about your WordPress to hackers. Disable it by simply toggling the option to ensure you make reconnaissance of hackers difficult</li>
+</ol>
+<br/>
+
+**Security Headers**
+<ol>
+	<li><strong>Clickjacking Protection</strong>
+Protect your WordPress Website from clickjacking with the X-Frame-Options response header. Clickjacking is an attack that tricks a user into clicking a webpage element which is invisible or disguised as another element.</li>
+	<li><strong>XSS Protection</strong>
+Add the HTTP X-XSS-Protection response header so that browsers such as Chrome, Safari, Microsoft Edge stops pages from loading when they detect reflected cross-site scripting (XSS) attacks.</li>
+	<li><strong>Content Sniffing protection</strong>
+Add the X-Content-Type-Options response header to protect against MIME sniffing vulnerabilities. Such vulnerabilities can occur when a website allows users to upload content to a website, however the user disguises a particular file type as something else. This can give them the opportunity to perform cross-site scripting and compromise the website.
+</li>
+	<li><strong>HTTP only & Secure flag</strong>
+Enable the HttpOnly and secure flags to make the cookies more secure. This instructs the browser to trust the cookie only by the server, which adds a layer of protection against XSS attacks.</li>
 </ol>
 
 <br/>
@@ -140,7 +156,7 @@ No, WP Hardening does not conflict with any security plugin. However, you can ge
 =What level of support will I get?=
 
 You can contact our team via
-<a href=”mailto:hello@getastra.com”>mail</a>. Besides, we also have an extensive repository of <a href=”https://www.getastra.com/kb/”>knowledge bases</a> to help you save time.
+<a href=”mailto:hello@getastra.com”>mail</a>. Besides, we also have an extensive repository of <a href=”https://www.getastra.com/kb/kb/wp-hardening/”>knowledge bases</a> to help you save time.
 
 
 =Will this plugin help me to fix issues?=
@@ -170,8 +186,10 @@ Harden security with WP Hardening
 
 == Changelog ==
 
-Initial public release of WP Hardening Plugin.
-
-== Upgrade Notice ==
-
-Initial public release of WP Hardening Plugin.
+= 1.2 - January 31, 2020 =
+	* Improvement: Add security headers to the HTTP response
+	* Improvement: Changing the frequency of Hardening audits
+	* Improvement: Configure emails to be sent to upto 15 people
+    * Fix: jQuery bug on fixers page
+= 1.1 - March 31, 2020 =
+    * Initial public release of WP Hardening Plugin.

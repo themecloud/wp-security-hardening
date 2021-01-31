@@ -260,7 +260,7 @@ class issuesScanClass
         if (count($plugins) === 0) {
             $this->response_results['inactive_plugins'] = array(
                 'status' => 'success',
-                'message' => 'Great! All your plugins are running on the latest versions!',
+                'message' => 'Great! All your plugins are running on the latest versions.',
                 'details' => 'All plugins are running the latest versions.'
             );
         } else {
@@ -309,7 +309,7 @@ class issuesScanClass
         } else {
             $this->response_results['wp_version'] = array(
                 'status' => 'success',
-                'message' => __('Bravo! Your WordPress Version is up to date!', 'whp'),
+                'message' => __('Bravo! Your WordPress Version is up to date.', 'whp'),
                 'details' => sprintf(__('Your website is running the most secure version ( %s ) of WordPress.', 'whp'), $current_version),
             );
         }
@@ -338,7 +338,7 @@ class issuesScanClass
         if (count($errors) == 0) {
             $this->response_results['db_strength'] = array(
                 'status' => 'success',
-                'message' => __('Good job using strong passwords for your database!', 'whp'),
+                'message' => __('Good job using strong passwords for your database.', 'whp'),
                 'details' => __('You are following good password practices for your website. We recommend that you change your passwords often.', 'whp'),
             );
         } else {
@@ -605,14 +605,13 @@ public function remove_localstorage()
         }
 
         $current_points = 0;
-        $this->last_results = get_option('whp_scan_results', array());
-        if (count((array)$this->last_results) > 0) {
+        $this->last_results = get_option('whp_scan_results');
+        if (count((array)$this->last_results) > 0)
             foreach ((array)$this->last_results as $key => $value) {
                 if ($value['status'] == 'success') {
                     $current_points = $current_points + $this->issues_list[$key]['weight'];
                 }
             }
-        }
         $pers = (int)($current_points * 100 / $total_points);
         return $pers;
     }
@@ -1094,7 +1093,7 @@ class WHP_Change_Login_URL
         global $pagenow;
 
         if (is_admin() && !is_user_logged_in() && !defined('DOING_AJAX')) {
-            wp_die(__('You must log in to access the admin area.', 'whp'), '', array('response' => 403));
+            //wp_die(__('You must log in to access the admin area.', 'whp'), '', array('response' => 403));
         }
 
         $request = parse_url($_SERVER['REQUEST_URI']);

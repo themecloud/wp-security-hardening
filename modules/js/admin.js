@@ -1,10 +1,15 @@
 jQuery(document).ready(function ($) {
+$('form input').click(function(event){
+    $('form > div').css('transform', 'translateX('+$(this).data('location')+')');
 
+    $(this).parent().siblings().removeClass('selected');
+    $(this).parent().addClass('selected');
+  });
     $('.audit_process_container').fadeIn();
 
 //patch menu urls
     $('a[href="admin.php?page=wphwp_harden_help"]').attr('target', '_blank');
-    $('a[href="admin.php?page=wphwp_harden_help"]').attr('href', 'https://www.getastra.com/kb/kb/wp-harden');
+    $('a[href="admin.php?page=wphwp_harden_help"]').attr('href', 'https://www.getastra.com/kb/kb/wp-hardening/');
 
 
     $('a[href="admin.php?page=wphwp_harden_upgrade"]').attr('target', '_blank');
@@ -80,11 +85,11 @@ jQuery(document).ready(function ($) {
                  var emails = stringmail.split(',');
                 var i;
                 if(emails.length<=15)
-                { 
+                {
                 for (i = 0; i < emails.length; i++) {
-                    if(emails[i]!=''){  
+                    if(emails[i]!=''){
                     var reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
-                    if (reg.test($.trim(emails[i])) == false) 
+                    if (reg.test($.trim(emails[i])) == false)
                     {
                             alert('Invalid Email Address');
                              return false;
@@ -106,23 +111,31 @@ jQuery(document).ready(function ($) {
          }
 
 
-        else if ($(this).attr('id') == 'schedule_audit') {
+        else if ($(this).attr('id') == 'radio_clickjacking_protection') {
 
 
-            var stringschedule = $('#custom_admin_schedule_audit').val();
+            var stringschedule = $(this).val();
 
             var data = {
-                value: 'on',
+                value: stringschedule,
                 id: $(this).attr('id'),
-                custom_admin_schedule_audit: stringschedule,
                 action: 'process_fixer',
                 security: whp_local_data.nonce
             }
+         } else if ($(this).attr('id') == 'schedule_audit') {
+
+
+             var stringschedule = $('#custom_admin_schedule_audit').val();
+
+             var data = {
+                 value: 'on',
+                 id: $(this).attr('id'),
+                 custom_admin_schedule_audit: stringschedule,
+                 action: 'process_fixer',
+                 security: whp_local_data.nonce
+             }
          }
-
-
-
-         else{ 
+         else{
             var data = {
                 value: 'on',
                 id: $(this).attr('id'),

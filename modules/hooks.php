@@ -13,7 +13,7 @@ function wh_admin_footer(){
 add_action('init', 'fake_cron_function');
 function fake_cron_function(){
 	$last_run = get_option('hard_cron');
-	$schedule_audit = get_option('custom_admin_schedule_audit');
+	$schedule_audit = get_option('whp_custom_admin_schedule_audit');
  	
 	if( $last_run == '' || !$last_run ){
 		$last_run = time();
@@ -70,7 +70,7 @@ function fake_cron_function(){
 		$subject = sprintf( __('%d WordPress Hardening recommendations for %s',  'whp'), $resom_amount, get_option('home') );
 
 		 // getting list of users
-		 $report_mail_array = get_option('custom_admin_report_email');
+		 $report_mail_array = get_option('whp_custom_admin_report_email');
 		 $report_mails = explode(',',$report_mail_array);
 		if( count($report_mails) > 0 ){
 			foreach( $report_mails as $report_mail ){
@@ -94,7 +94,7 @@ function fake_cron_function(){
 
 				$headers[]= "MIME-Version: 1.0" . "\r\n";
 				$headers[]= "Content-type:text/html;charset=UTF-8" . "\r\n";
-				
+
 				wp_mail( $report_mail, $subject, $content, $headers);
 			
 			}
@@ -205,6 +205,11 @@ function whp_fixers_processing(){
 		}
 	}
 
+    // hide wp meta & version
+    if( $fixer_options['disable_app_passwords'] == 'on' ){
+        add_filter( 'wp_is_application_passwords_available', '__return_false' );
+    }
+
 	// hide wp meta & version
 	if( $fixer_options['hide_wp_version_number'] == 'on' ){
 		add_filter( 'the_generator', '__return_null' );
@@ -255,10 +260,10 @@ function whp_init_redirect(){
 	
 
 	if( $_GET['page'] == 'wphwp_harden_help' ){
-		$url = 'https://www.getastra.com/kb/kb/wp-harden';
+		$url = 'https://www.getastra.com/kb/kb/wp-hardening/';
 	}
 	if( $_GET['page'] == 'wphwp_harden_upgrade' ){
-		$url = 'https://www.getastra.com/?ref=wp-harden';
+		$url = 'https://www.getastra.com/?ref=wp-hardening';
 	}
 	if( $url ){
 		wp_Redirect( $url, 302 );
