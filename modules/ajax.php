@@ -167,7 +167,7 @@ function whp_process_fixer()
              // xss protection   
             case "radio_clickjacking_protection":
 
-                if ($value != '') {
+                if (!empty($value) && is_numeric($value)) {
  
                     update_site_option('whp_radio_clickjacking_protection', $value);
                     update_option('whp_radio_clickjacking_protection', $value);

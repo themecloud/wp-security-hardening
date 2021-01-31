@@ -9,7 +9,7 @@ $('form input').click(function(event){
 
 //patch menu urls
     $('a[href="admin.php?page=wphwp_harden_help"]').attr('target', '_blank');
-    $('a[href="admin.php?page=wphwp_harden_help"]').attr('href', 'https://www.getastra.com/kb/kb/wp-harden');
+    $('a[href="admin.php?page=wphwp_harden_help"]').attr('href', 'https://www.getastra.com/kb/kb/wp-hardening/');
 
 
     $('a[href="admin.php?page=wphwp_harden_upgrade"]').attr('target', '_blank');
@@ -111,23 +111,31 @@ $('form input').click(function(event){
          }
 
 
-        else if ($(this).attr('id') == 'schedule_audit') {
+        else if ($(this).attr('id') == 'radio_clickjacking_protection') {
 
 
-            var stringschedule = $('#custom_admin_schedule_audit').val();
+            var stringschedule = $(this).val();
 
             var data = {
-                value: 'on',
+                value: stringschedule,
                 id: $(this).attr('id'),
-                custom_admin_schedule_audit: stringschedule,
                 action: 'process_fixer',
                 security: whp_local_data.nonce
             }
+         } else if ($(this).attr('id') == 'schedule_audit') {
+
+
+             var stringschedule = $('#custom_admin_schedule_audit').val();
+
+             var data = {
+                 value: 'on',
+                 id: $(this).attr('id'),
+                 custom_admin_schedule_audit: stringschedule,
+                 action: 'process_fixer',
+                 security: whp_local_data.nonce
+             }
          }
-
-
-
-         else{ 
+         else{
             var data = {
                 value: 'on',
                 id: $(this).attr('id'),

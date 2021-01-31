@@ -692,8 +692,8 @@ input:checked + .whp-switch::after {
 
  .switcher_line .switcher {margin-right: 20px;}   
 
-.switch-accodin {box-shadow: 0px 1px 2px 1px rgba(0, 0, 0, 0.4);
-	 display: flex;
+.switch-accodin {
+	display: flex;
     justify-content: space-between;
     background-color: #eef0f5;
 	border-radius: 16px;}
@@ -712,8 +712,15 @@ input:checked + .whp-switch::after {
 
  .switch-accodin > div:empty {display: none;}   
 
- .switch-accodin label.selected  {background: 	#1B5ED9; 
- 	color:#fff;}  
+ .switch-accodin label.selected  {
+	 background-color: #52cf71;
+	 box-shadow: 2px 9px 10px 0 rgb(9 255 119 / 15%);
+ 	color:#fff;
+ }
+
+.switch-accodin label.selected:nth-of-type(1){
+	background-color: #dc694f;
+}
 
  .switch-accodin label.selected:nth-of-type(1) {border-top-left-radius: 16px;
  	border-bottom-left-radius: 16px;}

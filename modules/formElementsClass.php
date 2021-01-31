@@ -335,23 +335,23 @@ if( !class_exists('whpFormElementsClass') ){
 
 											array(
 												'title' => __( 'Clickjacking Protection', 'whp'),
-                                                'info' => __("On enabling this setting your WordPress Website is protected from clickjacking. Clickjacking is an attack that tricks a user into clicking a webpage element which is invisible or disguised as another element.", 'whp'),
+                                                'info' => __("Protect your site from clickjacking. Use deny mode to block all iframes, and Same mode to only allow iframes from your own domain. Clickjacking is an attack that tricks a user into clicking a webpage element which is invisible or disguised as another element.", 'whp'),
 												'slug' => 'clickjacking_protection'
 											),
 											array(
 												'title' => __( 'XSS Protection', 'whp'),
-                                                'info' => __("On enabling this setting your WordPress Website is protected from XSS attacks. Cross-Site Scripting (XSS) attacks are a type of injection, in which malicious scripts are injected into otherwise benign and trusted websites.", 'whp'),
+                                                'info' => __("Add the HTTP X-XSS-Protection response header so that browsers such as Chrome, Safari, Microsoft Edge stops pages from loading when they detect reflected cross-site scripting (XSS) attacks.", 'whp'),
 												'slug' => 'xss_protection'
 											),
 											array(
 												'title' => __( 'Content Sniffing protection', 'whp'),
-                                                'info' => __("On enabling this setting your WordPress Website is protected from Content Sniffing. An attacker can leverage Content Sniffing to send an XSS Attack.", 'whp'),
+                                                'info' => __("Add the X-Content-Type-Options response header to protect against MIME sniffing vulnerabilities. Such vulnerabilities can occur when a website allows users to upload content to a website, however the user disguises a particular file type as something else. This can give them the opportunity to perform cross-site scripting and compromise the website.", 'whp'),
 												'slug' => 'content_sniffing_protection'
 											),
 
 											array(
 												'title' => __( 'HTTP only & Secure flag', 'whp'),
-                                                'info' => __("On enabling this setting your WordPress Website is protected from XSS attacks. HttpOnly and secure flags can be used to make the cookies more secure. When a secure flag is used, then the cookie will only be sent over HTTPS. When HttpOnly flag is used, JavaScript will not be able to read the cookie in case of XSS exploitation..", 'whp'),
+                                                'info' => __("Enable the HttpOnly and secure flags to make the cookies more secure. This instructs the browser to trust the cookie only by the server, which adds a layer of protection against XSS attacks.", 'whp'),
 												'slug' => 'http_secure_flag'
 											),
 						 
@@ -403,18 +403,16 @@ if( !class_exists('whpFormElementsClass') ){
 												</div>
 											</div>';
 											}elseif( $single_line['slug'] == 'clickjacking_protection' ){
-                                                get_option( 'whp_custom_admin_report_email');
+
                                                 $out .= '
 											<div class="row switcher_line">
 												<div class="switcher">
 													<div class="switch_cont switch-accodin">
-														 
-
 																<form action="" id="searchTypeToggle">
 																  <div></div>
 																  <label class="'. ( get_option( 'whp_radio_clickjacking_protection') == '1' ? 'selected' : '' ) . '">
 																    <input type="radio" class="trace_switch" name="radio_clickjacking_protection" id="radio_clickjacking_protection" data-location="0" value="1" >
-																    <div>Disable</div>
+																    <div>Off</div>
 																  </label>
 																  <label class="'. ( get_option( 'whp_radio_clickjacking_protection') == '2' ? 'selected' : '' ) . '">
 																    <input type="radio" class="trace_switch" name="radio_clickjacking_protection" id="radio_clickjacking_protection" data-location="calc(100% - 8px)" value="2" >
@@ -422,20 +420,12 @@ if( !class_exists('whpFormElementsClass') ){
 																  </label>
 																  <label class="'. ( get_option( 'whp_radio_clickjacking_protection') == '3' ? 'selected' : '' ) . '">
 																    <input type="radio" class="trace_switch" name="radio_clickjacking_protection" id="radio_clickjacking_protection" data-location="calc(200% - 12px)" value="3" >
-																    <div>Same Origin</div>
+																    <div>Same</div>
 																  </label>
 																</form>
-
-
-															 
-															 
-														 
 													</div>
 												</div>
-												
 												<div class="description" data-balloon-length="large" aria-label="' . $single_line['info'] . '" data-balloon-pos="up">'.$single_line['title'].'</div>
-
-												 
 											</div>';
                                             }else{
 												$out .= '
