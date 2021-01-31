@@ -169,11 +169,11 @@ function whp_process_fixer()
 
                 if ($value != '') {
  
-                    update_site_option('radio_clickjacking_protection', $value);
-                    update_option('radio_clickjacking_protection', $value);
+                    update_site_option('whp_radio_clickjacking_protection', $value);
+                    update_option('whp_radio_clickjacking_protection', $value);
                 } else {
-                    delete_site_option('radio_clickjacking_protection');
-                    delete_option('radio_clickjacking_protection');
+                    delete_site_option('whp_radio_clickjacking_protection');
+                    delete_option('whp_radio_clickjacking_protection');
                 }
 
 
@@ -182,11 +182,11 @@ function whp_process_fixer()
             case "xss_protection":
 
                 if ($value == 'on') {
-                    update_site_option('xss_protection', $value);
-                    update_option('xss_protection', $value);
+                    update_site_option('whp_xss_protection', $value);
+                    update_option('whp_xss_protection', $value);
                 } else {
-                    delete_site_option('xss_protection');
-                    delete_option('xss_protection');
+                    delete_site_option('whp_xss_protection');
+                    delete_option('whp_xss_protection');
                 }
 
 
@@ -194,11 +194,11 @@ function whp_process_fixer()
             case "content_sniffing_protection":
 
                 if ($value == 'on') {
-                   update_site_option('content_sniffing_protection', $value);
-                    update_option('content_sniffing_protection', $value);
+                   update_site_option('whp_content_sniffing_protection', $value);
+                    update_option('whp_content_sniffing_protection', $value);
                 } else {
-                    delete_site_option('content_sniffing_protection');
-                    delete_option('content_sniffing_protection');
+                    delete_site_option('whp_content_sniffing_protection');
+                    delete_option('whp_content_sniffing_protection');
                 }   
                 
 
@@ -206,11 +206,11 @@ function whp_process_fixer()
             case "http_secure_flag":
 
                 if ($value == 'on') {
-                    update_site_option('http_secure_flag', $value);
-                    update_option('http_secure_flag', $value);
+                    update_site_option('whp_http_secure_flag', $value);
+                    update_option('whp_http_secure_flag', $value);
                 } else {
-                    delete_site_option('http_secure_flag');
-                    delete_option('http_secure_flag');
+                    delete_site_option('whp_http_secure_flag');
+                    delete_option('whp_http_secure_flag');
                 } 
 
 
@@ -238,13 +238,13 @@ function whp_process_fixer()
                 }
                 if ($fixer_options['report_email'] == 'on') {
                     $custom_admin_report_email = $_POST['custom_admin_report_email'];
-                    update_site_option('custom_admin_report_email', $custom_admin_report_email);
-                    update_option('custom_admin_report_email', $custom_admin_report_email);
+                    update_site_option('whp_custom_admin_report_email', $custom_admin_report_email);
+                    update_option('whp_custom_admin_report_email', $custom_admin_report_email);
                 } else { 
                     
                     $custom_admin_report_email = sanitize_title($_POST['custom_admin_report_email']);
-                    delete_site_option('custom_admin_report_email');
-                    delete_option('custom_admin_report_email');
+                    delete_site_option('whp_custom_admin_report_email');
+                    delete_option('whp_custom_admin_report_email');
                 } 
 
 
@@ -253,12 +253,12 @@ function whp_process_fixer()
             if ($_POST['id'] == 'schedule_audit') { 
                 if ($fixer_options['schedule_audit'] == 'on') { 
                     $custom_admin_schedule_audit = $_POST['custom_admin_schedule_audit'];
-                    update_site_option('custom_admin_schedule_audit', $custom_admin_schedule_audit);
-                    update_option('custom_admin_schedule_audit', $custom_admin_schedule_audit);
+                    update_site_option('whp_custom_admin_schedule_audit', $custom_admin_schedule_audit);
+                    update_option('whp_custom_admin_schedule_audit', $custom_admin_schedule_audit);
                 } else { 
                     $custom_admin_schedule_audit = sanitize_title($_POST['custom_admin_schedule_audit']);
-                    delete_site_option('custom_admin_schedule_audit');
-                    delete_option('custom_admin_schedule_audit');
+                    delete_site_option('whp_custom_admin_schedule_audit');
+                    delete_option('whp_custom_admin_schedule_audit');
                 }       
              }   
 

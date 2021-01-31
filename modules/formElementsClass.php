@@ -121,9 +121,9 @@ if( !class_exists('whpFormElementsClass') ){
 													<div class="description" style="min-width:156px;" data-balloon-length="large" aria-label="Configure how often you would like the Hardening Audit to be run" data-balloon-pos="up">Schedule the Audit</div>
 													<div class="slug_container">
 													<select id="custom_admin_schedule_audit" '.( $this->getFixerOption('schedule_audit', 'off') == 'on' ? 'disabled' : '' ).' style="background-color: #fafafa;border: solid 1px #ebebeb; margin-left:10px;">
-														<option value="every day" '. ( get_option( 'custom_admin_schedule_audit', 'every week') == 'every day' ? 'selected' : '' ) . '>every day</option>
-														<option value="every week" ' . ( get_option( 'custom_admin_schedule_audit', 'every week') == 'every week' ? 'selected' : '' ) . '>every week</option>
-														<option value="every month" ' . ( get_option( 'custom_admin_schedule_audit', 'every week') == 'every month' ? 'selected' : '' ) . '>every month</option>
+														<option value="every day" '. ( get_option( 'whp_custom_admin_schedule_audit', 'every week') == 'every day' ? 'selected' : '' ) . '>every day</option>
+														<option value="every week" ' . ( get_option( 'whp_custom_admin_schedule_audit', 'every week') == 'every week' ? 'selected' : '' ) . '>every week</option>
+														<option value="every month" ' . ( get_option( 'whp_custom_admin_schedule_audit', 'every week') == 'every month' ? 'selected' : '' ) . '>every month</option>
 													</select>
 														  
 													</div>
@@ -235,11 +235,16 @@ if( !class_exists('whpFormElementsClass') ){
 									array(
 										'title' => __( 'Admin & API Security', 'whp'),
 										'variants' => array(
-												array(
-													'title' => __( 'Stop User Enumeration', 'whp'),
-													'info' => __('Hackers & bad bots can easily find usernames in WordPress by visiting URLs like yourwebsite.com/?author=1. This can significantly help them in performing larger attacks like Bruteforce & SQL injection.', 'whp'),
-													'slug' => 'stop_user_enumeration',
-												),
+                                            array(
+                                                'title' => __( 'Disable WordPress Application Passwords', 'whp'),
+                                                'info' => __('Hackers & bad bots can easily find usernames in WordPress by visiting URLs like yourwebsite.com/?author=1. This can significantly help them in performing larger attacks like Bruteforce & SQL injection.', 'whp'),
+                                                'slug' => 'disable_app_passwords',
+                                            ),
+                                            array(
+                                                'title' => __('Stop User Enumeration', 'whp'),
+                                                'info' => __('Hackers & bad bots can easily find usernames in WordPress by visiting URLs like yourwebsite.com/?author=1. This can significantly help them in performing larger attacks like Bruteforce & SQL injection.', 'whp'),
+                                                'slug' => 'stop_user_enumeration',
+                                            ),
 											 
 												array(
 													'title' => __( 'Change Login URL', 'whp'),
@@ -398,7 +403,7 @@ if( !class_exists('whpFormElementsClass') ){
 												</div>
 											</div>';
 											}elseif( $single_line['slug'] == 'clickjacking_protection' ){
-                                                get_option( 'custom_admin_report_email');
+                                                get_option( 'whp_custom_admin_report_email');
                                                 $out .= '
 											<div class="row switcher_line">
 												<div class="switcher">
@@ -407,15 +412,15 @@ if( !class_exists('whpFormElementsClass') ){
 
 																<form action="" id="searchTypeToggle">
 																  <div></div>
-																  <label class="'. ( get_option( 'radio_clickjacking_protection') == '1' ? 'selected' : '' ) . '">
+																  <label class="'. ( get_option( 'whp_radio_clickjacking_protection') == '1' ? 'selected' : '' ) . '">
 																    <input type="radio" class="trace_switch" name="radio_clickjacking_protection" id="radio_clickjacking_protection" data-location="0" value="1" >
 																    <div>Disable</div>
 																  </label>
-																  <label class="'. ( get_option( 'radio_clickjacking_protection') == '2' ? 'selected' : '' ) . '">
+																  <label class="'. ( get_option( 'whp_radio_clickjacking_protection') == '2' ? 'selected' : '' ) . '">
 																    <input type="radio" class="trace_switch" name="radio_clickjacking_protection" id="radio_clickjacking_protection" data-location="calc(100% - 8px)" value="2" >
 																    <div>Deny</div>
 																  </label>
-																  <label class="'. ( get_option( 'radio_clickjacking_protection') == '3' ? 'selected' : '' ) . '">
+																  <label class="'. ( get_option( 'whp_radio_clickjacking_protection') == '3' ? 'selected' : '' ) . '">
 																    <input type="radio" class="trace_switch" name="radio_clickjacking_protection" id="radio_clickjacking_protection" data-location="calc(200% - 12px)" value="3" >
 																    <div>Same Origin</div>
 																  </label>
