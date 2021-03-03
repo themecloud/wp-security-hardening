@@ -16,7 +16,7 @@ The WP Hardening is a one-click tool to fix standard security recommendations on
 == Description ==
 
 WP Hardening by Astra Security is a tool which performs a real-time <a href="https://www.getastra.com/blog/security-audit/wordpress-security-audit/">security audit</a> of your website to find missing security best practices. Using our ‘Security Fixer’ you can also fix these with a single click from your WordPress backend
-It is a task to achieve the basic WordPress security measures without using multiple plugins. Ironically, this induces higher risk of a compromisation for websites with so many plugins at work. Multiple plugins also ask for better maintenance, updates, which many webmasters failed to comply. WP Hardening plugin solves this problem and more.
+It is a task to achieve the basic WordPress security measures without using multiple plugins. Ironically, using many plugins there is a higher chance of the site being compromised. Multiple plugins also ask for better maintenance, updates, which many webmasters failed to comply. WP Hardening plugin solves this problem and more.
 
 WP Hardening is a one-stop solution to implement security recommendations for your WordPress website. It is effortless to use and works efficiently from your WordPress backend.
 
