@@ -15,13 +15,13 @@ The WP Hardening is a one-click tool to fix standard security recommendations on
 
 == Description ==
 
-WP Hardening by Astra Security is a tool which performs a real-time <a href="https://www.getastra.com/blog/security-audit/wordpress-security-audit/">security audit</a> of your website to find missing security best practices. Using our &lsquo;Security Fixer&rsquo; you can also fix these with a single click from your WordPress backend
+WP Hardening by Astra Security is a tool which performs a real-time <a href="https://www.getastra.com/blog/security-audit/wordpress-security-audit/">security audit</a> of your website to find missing security best practices. Using our ‘Security Fixer’ you can also fix these with a single click from your WordPress backend
 It is a task to achieve the basic WordPress security measures without using multiple plugins. Ironically, this induces higher risk of a compromisation for websites with so many plugins at work. Multiple plugins also ask for better maintenance, updates, which many webmasters failed to comply. WP Hardening plugin solves this problem and more.
 
 WP Hardening is a one-stop solution to implement security recommendations for your WordPress website. It is effortless to use and works efficiently from your WordPress backend.
 
 <strong>About Astra</strong>
-<p><br />Astra Security is a Techstars company &amp; the winner of the French Tech Ticket Program. Awarded as The Most Innovative Security Company at the Global Conference on Cyber Security.<br />
+<p><br />Astra Security is a Techstars company & the winner of the French Tech Ticket Program. Awarded as The Most Innovative Security Company at the Global Conference on Cyber Security.<br />
 
 Astra's vision is to make cyber security a five minute affair for businesses</p>
 <p><em>Astra's promise to a business owner is that their business would be secure without any ifs or buts. </em><em><strong>If a business is using Astra, they will be secure - no questions asked.</strong></em></p>
@@ -40,27 +40,27 @@ Astra's vision is to make cyber security a five minute affair for businesses</p>
   <li><strong>Checking PHP Version</strong>
     WP Hardening also checks if your website is running on a secure version of PHP.<br>
   </li>
-  <li><strong>Checking File &amp; Folder Permissions</strong>
+  <li><strong>Checking File & Folder Permissions</strong>
     WP Hardening also checks if your website is built on the secured version of PHP or not.<br>
   </li>
   <li><strong>Database Password Strength</strong>
     We check the strength of passwords used on your database. Not having a secured password can become an easy target for Brute-Force attacks.<br>
   </li>
   <li><strong>Checking Firewall Protection</strong>
-    We&rsquo;ll check if your website is being protected by a firewall or not. Firewalls leverage a great monitoring and filtering system on your website. Check out the features of Astra firewall <a href="https://www.getastra.com/wordpress-firewall" rel="noopener noreferrer" target="_blank">here</a>.<br>
+    We’ll check if your website is being protected by a firewall or not. Firewalls leverage a great monitoring and filtering system on your website. Check out the features of Astra firewall <a href="https://www.getastra.com/wordpress-firewall" rel="noopener noreferrer" target="_blank">here</a>.<br>
   </li>
 </ol>
 
 ##Security Fixers##
 
-<p>**<a href="https://www.getastra.com/blog/knowledge-base/api-security-testing/">Admin &amp; API Security</a>**</p>
+**<a href="https://www.getastra.com/blog/knowledge-base/api-security-testing/">Admin & API Security</a>**
 
 <ol>
-<li><strong>Stop User Enumeration</strong> Hackers &amp; bad bots can easily find usernames in WordPress by visiting URLs like <em>yourwebsite.com/?author=1</em>. This can significantly help them in performing larger attacks like Bruteforce &amp; SQL injection.</li>
+<li><strong>Stop User Enumeration</strong> Hackers & bad bots can easily find usernames in WordPress by visiting URLs like <em>yourwebsite.com/?author=1</em>. This can significantly help them in performing larger attacks like Bruteforce & SQL injection.</li>
 <li><strong>Change Login URL</strong> Prevent admin <a href="https://www.getastra.com/blog/cms/wordpress-security/wordpress-security-guide/#7_Customize_the_login_page_to_increase_security_against_Brute-Force_attacks">password brute-forcing</a> by changing the URL for the wp-admin login area. You can change the url only when this fixer is disabled.</li>
-<li><strong>Disable XMLRPC</strong> XMLRPC is often targeted by bots to perform brute force &amp; DDoS attacks (via pingback) causing considerable stress on your server. However, there are some services which rely on xmlrpc. Be sure you definitely do not need xmlrpc before disabling it. If you are using Astra firewall, then you&rsquo;re safe against xmlrpc attacks automatically.</li>
-<li><strong>Disable WP API JSON</strong> Since 4.4 version, WordPress added JSON REST API which largely benefits developers. However, it&rsquo;s often targeted for bruteforce attacks just like in the case of xmlrpc. If you are not using it, best is to disable it.</li>
-<li><strong>Disable File Editor</strong> If a hacker is able to get access to your WordPress admin, with the file editor enabled it becomes quite easy for them to add malicious code to your theme or plugins. If you are not using this, it&rsquo;s best to keep the file editor disabled.</li>
+<li><strong>Disable XMLRPC</strong> XMLRPC is often targeted by bots to perform brute force & DDoS attacks (via pingback) causing considerable stress on your server. However, there are some services which rely on xmlrpc. Be sure you definitely do not need xmlrpc before disabling it. If you are using Astra firewall, then you’re safe against xmlrpc attacks automatically.</li>
+<li><strong>Disable WP API JSON</strong> Since 4.4 version, WordPress added JSON REST API which largely benefits developers. However, it’s often targeted for bruteforce attacks just like in the case of xmlrpc. If you are not using it, best is to disable it.</li>
+<li><strong>Disable File Editor</strong> If a hacker is able to get access to your WordPress admin, with the file editor enabled it becomes quite easy for them to add malicious code to your theme or plugins. If you are not using this, it’s best to keep the file editor disabled.</li>
 <li><strong>Disable WordPress Application Passwords</strong> WordPress application passwords have full permissions of the user that generated them, making it possible for an attacker to gain control of a website by tricking the site administrator into granting permission to their malicious application.</li>
 </ol>
 
@@ -116,7 +116,7 @@ Enable the HttpOnly and secure flags to make the cookies more secure. This instr
 == Installation ==
 
 <ol>
-  <li>Visit ‘Plugins &gt; Add New’ in your admin dashboard</li>
+  <li>Visit ‘Plugins > Add New’ in your admin dashboard</li>
   <li>Search for ‘WP-Hardening’</li>
   <li>Install WP-Hardening once it appears</li>
   <li>Activate it from your Plugins page</li>
@@ -162,6 +162,7 @@ Astra's WordPress security suite can help you to fix & prevent the below mention
 <ul>
     <li><a href="https://www.getastra.com/blog/cms/wordpress-security/prevent-wordpress-brute-force-attack/">Brute force attacks</a></li>
     <li><a href="https://www.getastra.com/blog/911/pharma-hack-wordpress-and-drupal/">Pharma hack</a></li>
+    <li><a href="https://www.getastra.com/blog/911/spam-link-injection-in-wordpress/">Spam Link Injection</a></li>
     <li><a href="https://www.getastra.com/blog/911/wordpress-redirect-hack/">WordPress redirect hack</a></li>
     <li><a href="https://www.getastra.com/blog/911/japanese-keyword-hack/">Japanese keyword hack</a></li>
     <li><a href="https://www.getastra.com/blog/911/remove-wordpress-spam-search-results/">SEO spam hack</a></li>
@@ -171,10 +172,10 @@ Astra's WordPress security suite can help you to fix & prevent the below mention
     <li><a href="https://www.getastra.com/blog/911/how-to-remove-fix-magento-opencart-credit-card-malware-hack/">Credit Card Malware Hack</a></li>
     <li><a href="https://www.getastra.com/blog/911/google-blacklist/">Google Blacklist hack</a></li>
     <li><a href="https://www.getastra.com/blog/911/google-adwords-account-suspended/">Google Adwords Account Suspension</a></li>
-    <li><a href="https://www.getastra.com/blog/knowledge-base/ways-to-prevent-cookie-stealing/">Cookie stealing &amp; session hijacking</a></li>
+    <li><a href="https://www.getastra.com/blog/knowledge-base/ways-to-prevent-cookie-stealing/">Cookie stealing & session hijacking</a></li>
     <li><a href="https://www.getastra.com/blog/911/remove-google-phishing-warning-message">WP phishing hack</a></li>
     <li><a href="https://www.getastra.com/e/malware/infections/favicon-ico-malware-backdoor-in-wordpress-drupal">Favicon.ico malware hack</a></li>
-    <li><a href="https://www.getastra.com/e/malware/infections/fixing-wp-feedphp-wp-tmpphp-malware-in-wordpress">WP-Feed.php &amp; WP-Tmp.php</a></li>
+    <li><a href="https://www.getastra.com/e/malware/infections/fixing-wp-feedphp-wp-tmpphp-malware-in-wordpress">WP-Feed.php & WP-Tmp.php</a></li>
     <li><a href="https://www.getastra.com/blog/911/wordpress-backdoor-hack/">WP Backdoor hack</a></li>
     <li><a href="https://www.getastra.com/blog/911/remove-crypto-mining-malware-cms-wordpress-magento-drupal/">Coinhive hack (Crypto Mining Malware)</a></li>
     <li><a href="https://www.getastra.com/blog/cms/website-defacement-removal/">WordPress deface hack</a></li>
