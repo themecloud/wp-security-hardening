@@ -1,4 +1,6 @@
 <?php
+require_once(dirname(__FILE__, 3) . "/../../wp-includes/pluggable.php");
+require_once(dirname(__FILE__, 3) . "/../../wp-load.php");
 
 if (!defined('ABSPATH')) exit ('Peekaboo!');
 
@@ -11,49 +13,67 @@ function wh_admin_footer(){
 add_action('init', 'fake_cron_function');
 function fake_cron_function(){
 	$last_run = get_option('hard_cron');
+	$schedule_audit = get_option('whp_custom_admin_schedule_audit');
+ 	
 	if( $last_run == '' || !$last_run ){
 		$last_run = time();
 		update_option('hard_cron', $last_run  );
 	}
 
-	if( time() - $last_run  > 60*60*24 ){
+	if( trim($schedule_audit) =='every day' && (time() - $last_run  > 60*60*24) ){
 		
 		whp_task_function();
 		
 		$last_run = time();
 		update_option('hard_cron', $last_run  );
 	}
+
+	elseif( trim($schedule_audit) =='every week' && (time() - $last_run  > 60*60*24*7) ){
+		
+		whp_task_function();
+		
+		$last_run = time();
+		update_option('hard_cron', $last_run  );
+	}
+
+
+	elseif( trim($schedule_audit) =='every month' && (time() - $last_run  > 60*60*24*30) ){
+		
+		whp_task_function();
+		
+		$last_run = time();
+		update_option('hard_cron', $last_run  );
+	}
+	elseif(time() - $last_run  > 60*60*24*30){
+
+		whp_task_function();
+		
+		$last_run = time();
+		update_option('hard_cron', $last_run  );
+
+	}
+
 }
 
-  
+  //whp_task_function();
   function whp_task_function() {
+
 		global $wpdb;
 
 		$tnp = new issuesScanClass();
 		$tnp->run_issues_check();
-
-	
 		$obj = new tableViewOutput();
 		$obj->process_results();
-	 
 		$resom_amount = $obj->get_recommendations_amount();
-
 		$issues_list = $obj->generate_widget_list( 10 );
 
 		$subject = sprintf( __('%d WordPress Hardening recommendations for %s',  'whp'), $resom_amount, get_option('home') );
 
-
-		// getting list of users
-  		$user_ids = $wpdb->get_col("SELECT user_id FROM {$wpdb->prefix}usermeta WHERE meta_key = 'whp_subscribed_email'");
-
-  		/*
-		if( count($user_ids) > 0 ){
-			foreach( $user_ids as $single_id ){
-
-				$user_email = get_user_meta( $single_id, 'whp_subscribed_email', true );
-
-				$user_data = get_userdata( $single_id );
-
+		 // getting list of users
+		 $report_mail_array = get_option('whp_custom_admin_report_email');
+		 $report_mails = explode(',',$report_mail_array);
+		if( count($report_mails) > 0 ){
+			foreach( $report_mails as $report_mail ){
 				$content = sprintf( __('
 				<p>Howdy! %s</p>
 			
@@ -70,15 +90,16 @@ function fake_cron_function(){
 				<p>Thanks,</p>
 				<p>Ananda from Astra</p>
 
-				',  'whp'), $user_data->user_login, get_option('home'), $issues_list, admin_url('/admin.php?page=wphwp_harden#audit_bottom_block') ); 
-				$headers = array('Content-Type: text/html; charset=UTF-8');
+				',  'whp'), '', get_option('home'), $issues_list, admin_url('/admin.php?page=wphwp_harden#audit_bottom_block') ); 
 
-				//var_dump( $content );
+				$headers[]= "MIME-Version: 1.0" . "\r\n";
+				$headers[]= "Content-type:text/html;charset=UTF-8" . "\r\n";
 
-				wp_mail( $user_email, $subject, $content, $headers);
+				wp_mail( $report_mail, $subject, $content, $headers);
+			
 			}
 		}
-		*/
+		 
 	
 		
   }
@@ -184,6 +205,11 @@ function whp_fixers_processing(){
 		}
 	}
 
+    // hide wp meta & version
+    if( $fixer_options['disable_app_passwords'] == 'on' ){
+        add_filter( 'wp_is_application_passwords_available', '__return_false' );
+    }
+
 	// hide wp meta & version
 	if( $fixer_options['hide_wp_version_number'] == 'on' ){
 		add_filter( 'the_generator', '__return_null' );
@@ -234,10 +260,10 @@ function whp_init_redirect(){
 	
 
 	if( $_GET['page'] == 'wphwp_harden_help' ){
-		$url = 'https://www.getastra.com/kb/kb/wp-harden';
+		$url = 'https://www.getastra.com/kb/kb/wp-hardening/';
 	}
 	if( $_GET['page'] == 'wphwp_harden_upgrade' ){
-		$url = 'https://www.getastra.com/?ref=wp-harden';
+		$url = 'https://www.getastra.com/?ref=wp-hardening';
 	}
 	if( $url ){
 		wp_Redirect( $url, 302 );
@@ -312,7 +338,7 @@ echo '
 
 // show admin toification
 function whp_general_admin_notice(){
-	/*global $pagenow;
+	global $pagenow;
 	global $current_user;
 	//delete_user_meta( $current_user->ID, 'hide_secure_subs');
 	//delete_user_meta( $current_user->ID, 'whp_subscribed_email');
@@ -376,7 +402,7 @@ function whp_general_admin_notice(){
 				 
 			</div>
          </div>';
-   // }*/
+   // }
 }
 add_action('admin_notices', 'whp_general_admin_notice');
 

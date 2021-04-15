@@ -8,17 +8,28 @@ if( !class_exists('whpFormElementsClass') ){
 		protected  $type;
 		protected  $settings;
 		protected  $content;
-	 
+		protected  $fixerOptions;
+
 		function __construct( $type, $parameters, $value ){
 	 
 			$this->type = $type;
 			$this->parameters = $parameters;
 			$this->value = $value;
-			
-			
+			$this->fixerOptions = get_option('whp_fixer_option');
+
+
 			$this->generate_result_block();
  
 		}
+
+		function getFixerOption($key, $default = ''){
+            if(isset($this->fixerOptions[$key])){
+                return $this->fixerOptions[$key];
+            }else{
+                return $default;
+            }
+        }
+
 		function generate_result_block(){
 			$out = '';
 			switch( $this->type ){
@@ -77,11 +88,16 @@ if( !class_exists('whpFormElementsClass') ){
 								<div class="head_tab">
 									<a class="tab_link" href="#passed_tab">'.__('Passed Test', 'whp').'</a>
 								</div>
+								<div class="head_tab">
+									<a class="tab_link" href="#settings">&#9881; '.__('Settings', 'whp').'</a>
+								</div>
 							</div>';
 
 							$tmp = new tableViewOutput();
 							$tmp->process_results();							
 							$res_array = $tmp->return_data();
+
+							$switch_options = $this->fixerOptions;
 
 
 					 		$out .= '
@@ -92,9 +108,45 @@ if( !class_exists('whpFormElementsClass') ){
 								<div class="single_tab passed_tab" id="passed_tab">
 									'.$res_array['success'].'
 								</div>
-							</div>
+								<div class="single_tab settings_tab" id="settings">
+												<div class="row switcher_line">
+													<div class="switcher">
+														<div class="switch_cont">
+															<label class="whp-switch-wrap">
+																<input type="checkbox" '.( $this->getFixerOption('schedule_audit', 'off') == 'on' ? ' checked ' : '' ).'  value="on" class="trace_switch" id="schedule_audit" name="schedule_audit" />
+																<div class="whp-switch"></div>
+															</label>
+														</div>
+													</div>
+													<div class="description" style="min-width:156px;" data-balloon-length="large" aria-label="Configure how often you would like the Hardening Audit to be run" data-balloon-pos="up">Schedule the Audit</div>
+													<div class="slug_container">
+													<select id="custom_admin_schedule_audit" '.( $this->getFixerOption('schedule_audit', 'off') == 'on' ? 'disabled' : '' ).' style="background-color: #fafafa;border: solid 1px #ebebeb; margin-left:10px;">
+														<option value="every day" '. ( get_option( 'whp_custom_admin_schedule_audit', 'every week') == 'every day' ? 'selected' : '' ) . '>every day</option>
+														<option value="every week" ' . ( get_option( 'whp_custom_admin_schedule_audit', 'every week') == 'every week' ? 'selected' : '' ) . '>every week</option>
+														<option value="every month" ' . ( get_option( 'whp_custom_admin_schedule_audit', 'every week') == 'every month' ? 'selected' : '' ) . '>every month</option>
+													</select>
+														  
+													</div>
+												</div>
+								
+							
 
-
+                                            <div class="row switcher_line">
+												<div class="switcher">
+													<div class="switch_cont">
+														<label class="whp-switch-wrap">
+															<input type="checkbox" '.( $this->getFixerOption('report_email', 'off') == 'on' ? ' checked ' : '' ).'  value="on" class="trace_switch" id="report_email" name="report_email" />
+															<div class="whp-switch"></div>
+														</label>
+													</div>
+												</div>
+												<div class="description" data-balloon-length="large" aria-label="If you would like multiple people to receive email updates, enter up to 15 email ids separated by a comma." data-balloon-pos="up">Send Email Report to</div>
+												<div class="slug_container">
+													 <textarea data-balloon-pos="up" style="height:100px; background-color: #fafafa; border: solid 1px #ebebeb;width:400px; margin-left:10px;"  id="custom_admin_report_email" '.( $this->getFixerOption('report_email', 'off') == 'on' ? 'readonly' : '' ).'  placeholder="'.__('Enter your email address. If you would like multiple people to receive email updates, enter up to 15 email ids separated by a comma.','whp').'">'.get_option( 'custom_admin_report_email').'</textarea>
+												</div>
+											</div>
+											</div>
+</div>
 						</div>
 					</div>						';
 				break;
@@ -183,11 +235,16 @@ if( !class_exists('whpFormElementsClass') ){
 									array(
 										'title' => __( 'Admin & API Security', 'whp'),
 										'variants' => array(
-												array(
-													'title' => __( 'Stop User Enumeration', 'whp'),
-													'info' => __('Hackers & bad bots can easily find usernames in WordPress by visiting URLs like yourwebsite.com/?author=1. This can significantly help them in performing larger attacks like Bruteforce & SQL injection.', 'whp'),
-													'slug' => 'stop_user_enumeration',
-												),
+                                            array(
+                                                'title' => __( 'Disable WordPress Application Passwords', 'whp'),
+                                                'info' => __('Hackers & bad bots can easily find usernames in WordPress by visiting URLs like yourwebsite.com/?author=1. This can significantly help them in performing larger attacks like Bruteforce & SQL injection.', 'whp'),
+                                                'slug' => 'disable_app_passwords',
+                                            ),
+                                            array(
+                                                'title' => __('Stop User Enumeration', 'whp'),
+                                                'info' => __('Hackers & bad bots can easily find usernames in WordPress by visiting URLs like yourwebsite.com/?author=1. This can significantly help them in performing larger attacks like Bruteforce & SQL injection.', 'whp'),
+                                                'slug' => 'stop_user_enumeration',
+                                            ),
 											 
 												array(
 													'title' => __( 'Change Login URL', 'whp'),
@@ -268,7 +325,39 @@ if( !class_exists('whpFormElementsClass') ){
 						 
 										),
 									),
-									
+ 
+
+
+
+									array(
+										'title' => __( 'Security Headers', 'whp'),
+										'variants' => array(
+
+											array(
+												'title' => __( 'Clickjacking Protection', 'whp'),
+                                                'info' => __("Protect your site from clickjacking. Use deny mode to block all iframes, and Same mode to only allow iframes from your own domain. Clickjacking is an attack that tricks a user into clicking a webpage element which is invisible or disguised as another element.", 'whp'),
+												'slug' => 'clickjacking_protection'
+											),
+											array(
+												'title' => __( 'XSS Protection', 'whp'),
+                                                'info' => __("Add the HTTP X-XSS-Protection response header so that browsers such as Chrome, Safari, Microsoft Edge stops pages from loading when they detect reflected cross-site scripting (XSS) attacks.", 'whp'),
+												'slug' => 'xss_protection'
+											),
+											array(
+												'title' => __( 'Content Sniffing protection', 'whp'),
+                                                'info' => __("Add the X-Content-Type-Options response header to protect against MIME sniffing vulnerabilities. Such vulnerabilities can occur when a website allows users to upload content to a website, however the user disguises a particular file type as something else. This can give them the opportunity to perform cross-site scripting and compromise the website.", 'whp'),
+												'slug' => 'content_sniffing_protection'
+											),
+
+											array(
+												'title' => __( 'HTTP only & Secure flag', 'whp'),
+                                                'info' => __("Enable the HttpOnly and secure flags to make the cookies more secure. This instructs the browser to trust the cookie only by the server, which adds a layer of protection against XSS attacks.", 'whp'),
+												'slug' => 'http_secure_flag'
+											),
+						 
+										),
+									),
+ 									
 
 
 								);
@@ -293,7 +382,8 @@ if( !class_exists('whpFormElementsClass') ){
 										$switch_options = get_option('whp_fixer_option');
 
 										foreach( $single_top['variants'] as $single_line ){
-											 
+
+
 											if( $single_line['slug'] == 'change_login_url' ){
 												$out .= '
 											<div class="row switcher_line">
@@ -312,7 +402,32 @@ if( !class_exists('whpFormElementsClass') ){
 													 <input type="text" data-balloon-pos="up" id="custom_admin_slug" '.( $switch_options[$single_line['slug']] == 'on' ? ' readonly ' : '' ).' value="'.get_option( 'whp_admin_page').'" placeholder="'.__('Enter new slug','whp').'">
 												</div>
 											</div>';
-											}else{
+											}elseif( $single_line['slug'] == 'clickjacking_protection' ){
+
+                                                $out .= '
+											<div class="row switcher_line">
+												<div class="switcher">
+													<div class="switch_cont switch-accodin">
+																<form action="" id="searchTypeToggle">
+																  <div></div>
+																  <label class="'. ( get_option( 'whp_radio_clickjacking_protection') == '1' ? 'selected' : '' ) . '">
+																    <input type="radio" class="trace_switch" name="radio_clickjacking_protection" id="radio_clickjacking_protection" data-location="0" value="1" >
+																    <div>Off</div>
+																  </label>
+																  <label class="'. ( get_option( 'whp_radio_clickjacking_protection') == '2' ? 'selected' : '' ) . '">
+																    <input type="radio" class="trace_switch" name="radio_clickjacking_protection" id="radio_clickjacking_protection" data-location="calc(100% - 8px)" value="2" >
+																    <div>Deny</div>
+																  </label>
+																  <label class="'. ( get_option( 'whp_radio_clickjacking_protection') == '3' ? 'selected' : '' ) . '">
+																    <input type="radio" class="trace_switch" name="radio_clickjacking_protection" id="radio_clickjacking_protection" data-location="calc(200% - 12px)" value="3" >
+																    <div>Same</div>
+																  </label>
+																</form>
+													</div>
+												</div>
+												<div class="description" data-balloon-length="large" aria-label="' . $single_line['info'] . '" data-balloon-pos="up">'.$single_line['title'].'</div>
+											</div>';
+                                            }else{
 												$out .= '
 											<div class="row switcher_line">
 												<div class="switcher">
