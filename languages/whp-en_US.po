@@ -367,7 +367,7 @@ msgid ""
 msgstr ""
 
 #: modules/functions.php:253
-msgid "Bravo! Your WordPress Version is up to date!"
+msgid "Bravo! Your WordPress Version is up to date."
 msgstr ""
 
 #: modules/functions.php:254
@@ -388,7 +388,7 @@ msgid "Password must include at least one letter!"
 msgstr ""
 
 #: modules/functions.php:282
-msgid "Good job using strong passwords for your database!"
+msgid "Good job using strong passwords for your database."
 msgstr ""
 
 #: modules/functions.php:283
